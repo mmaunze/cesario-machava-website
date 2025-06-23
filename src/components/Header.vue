@@ -6,7 +6,6 @@
         <li><router-link to="/" @click="closeMobileMenu">Início</router-link></li>
         <li><router-link to="/blog" @click="closeMobileMenu">Blog</router-link></li>
         <li><router-link to="/downloads" @click="closeMobileMenu">Downloads</router-link></li>
-        <li><router-link to="/upload" @click="closeMobileMenu">Upload Ficheiros</router-link></li>
         <li>
           <div class="theme-switch-wrapper">
             <label class="theme-switch" for="checkbox">
