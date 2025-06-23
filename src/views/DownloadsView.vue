@@ -1,5 +1,5 @@
 <template>
-  <Header />
+
   <main>
     <section class="page-hero">
       <div class="container">
@@ -14,9 +14,11 @@
           <div class="sidebar-block search-block">
             <h3>Pesquisar</h3>
             <div class="search-input-wrapper">
-              <input type="text" v-model="searchQuery" placeholder="Pesquisar ficheiros..." class="search-input">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0010.607 10.607Z" />
+              <input v-model="searchQuery" class="search-input" placeholder="Pesquisar ficheiros..." type="text">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0010.607 10.607Z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
               </svg>
             </div>
           </div>
@@ -38,7 +40,7 @@
             <h3>Tags</h3>
             <div class="tag-cloud">
               <span v-for="tag in uniqueTags" :key="tag"
-                    :class="{ 'active': selectedTags.includes(tag) }" @click="toggleTag(tag)" class="tag-item">
+                    :class="{ 'active': selectedTags.includes(tag) }" class="tag-item" @click="toggleTag(tag)">
                 {{ tag }}
               </span>
               <span v-if="selectedTags.length > 0" class="clear-filters" @click="selectedTags = []">Limpar Tags</span>
@@ -60,12 +62,12 @@
                   <span>{{ file.size }}</span>
                   <span>{{ formatDate(file.uploadDate) }}</span>
                 </div>
-                <a :href="file.downloadLink" class="btn-download" :download="file.name" target="_blank"
-                   rel="noopener noreferrer">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                       stroke="currentColor" style="width: 20px; height: 20px;">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3V2.25" />
+                <a :download="file.name" :href="file.downloadLink" class="btn-download" rel="noopener noreferrer"
+                   target="_blank">
+                  <svg fill="none" stroke="currentColor" stroke-width="1.5" style="width: 20px; height: 20px;"
+                       viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3V2.25" stroke-linecap="round"
+                          stroke-linejoin="round"/>
                   </svg>
                   Baixar
                 </a>
@@ -77,30 +79,35 @@
           </div>
 
           <div v-if="totalPages > 1" class="pagination">
-            <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
-                    class="pagination-btn pagination-prev">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            <button :disabled="currentPage === 1" class="pagination-btn pagination-prev"
+                    @click="changePage(currentPage - 1)">
+              <svg fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"
+                   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.75 19.5L8.25 12l7.5-7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
-            <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                    :class="{ 'active': currentPage === page }" class="pagination-btn">
+            <button v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }"
+                    class="pagination-btn" @click="changePage(page)">
               {{ page }}
             </button>
-            <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
-                    class="pagination-btn pagination-next">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            <button :disabled="currentPage === totalPages" class="pagination-btn pagination-next"
+                    @click="changePage(currentPage + 1)">
+              <svg fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"
+                   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
           </div>
         </div>
       </div>
     </section>
   </main>
-  <Footer />
+
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import {computed, onMounted, ref, watch} from 'vue';
+
 
 // --- Estado Reativo ---
 const allDownloadableFiles = ref([
@@ -320,20 +327,20 @@ const toggleTag = (tag) => {
 const changePage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Opcional: rolar para o topo da página
+    window.scrollTo({top: 0, behavior: 'smooth'}); // Opcional: rolar para o topo da página
   }
 };
 
 // Função para formatar a data
 const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options = {year: 'numeric', month: 'long', day: 'numeric'};
   return new Date(dateString).toLocaleDateString('pt-PT', options);
 };
 
 // Observa mudanças nos ficheiros filtrados para resetar a página se a lista ficar vazia ou mudar drasticamente
 watch([filteredFiles, searchQuery, selectedCategory, selectedTags], () => {
   currentPage.value = 1; // Sempre resetar a página para 1 quando os filtros mudam
-}, { immediate: true }); // Executar imediatamente para configurar a página inicial
+}, {immediate: true}); // Executar imediatamente para configurar a página inicial
 
 
 // --- ANIMATIONS ---
@@ -824,6 +831,7 @@ onMounted(() => {
   .sidebar-block h3 {
     font-size: 1.2rem;
   }
+
   .tag-item {
     font-size: 0.8rem;
     padding: 0.5rem 0.8rem;

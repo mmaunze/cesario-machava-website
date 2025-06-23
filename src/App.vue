@@ -1,17 +1,22 @@
 <template>
+  <Header/>
   <div id="app-wrapper">
-    <router-view />
+    <router-view/>
 
     <button id="back-to-top" aria-label="Voltar ao topo">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+      <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 15.75l7.5-7.5 7.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
   </div>
+  <Footer/>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
+
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+import {onMounted, onUnmounted} from 'vue';
 
 // Lógica do botão "Voltar ao topo" no JavaScript
 const handleScroll = () => {
@@ -26,7 +31,7 @@ const handleScroll = () => {
 };
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top: 0, behavior: 'smooth'});
 };
 
 onMounted(() => {
@@ -123,7 +128,7 @@ body {
   background-color: var(--bg-body);
   transition: background-color 0.4s ease, color 0.4s ease; /* Transição suave para tema */
   min-height: 100vh; /* Garante que o body ocupe a altura total da viewport */
-  display: flex; /* Para flexbox do #app-wrapper */
+  /*display: flex; Para flexbox do #app-wrapper */
   flex-direction: column; /* Para empilhar conteúdo e footer no final */
 }
 
@@ -225,6 +230,7 @@ section:nth-child(even) { /* Para alternar o background das secções */
   .container {
     padding: 0 1rem;
   }
+
   .section-title {
     font-size: 2rem;
   }
@@ -247,11 +253,13 @@ section:nth-child(even) { /* Para alternar o background das secções */
     transform: translateY(0);
   }
 }
+
 .animated {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
+
 .animated.visible {
   opacity: 1;
   transform: translateY(0);

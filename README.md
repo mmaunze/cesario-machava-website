@@ -1,14 +1,20 @@
 # Website Pessoal - Cesário Machava
 
-![Banner do Projeto](public/banner-cesario-machava.png) Este é o website pessoal e profissional de Cesário Machava, Engenheiro Civil e especialista em Gestão de Ativos, Risco Operacional e Lean Six Sigma. O objetivo deste projeto é criar uma presença online moderna, profissional e responsiva, destacando a sua experiência, projetos e conhecimentos.
+![Banner do Projeto](public/banner-cesario-machava.png) Este é o website pessoal e profissional de Cesário Machava,
+Engenheiro Civil e especialista em Gestão de Ativos, Risco Operacional e Lean Six Sigma. O objetivo deste projeto é
+criar uma presença online moderna, profissional e responsiva, destacando a sua experiência, projetos e conhecimentos.
 
-O projeto foi desenvolvido com Vue.js 3 (Composition API com `<script setup>`) e Vue Router para uma experiência de utilizador fluída e eficiente.
+O projeto foi desenvolvido com Vue.js 3 (Composition API com `<script setup>`) e Vue Router para uma experiência de
+utilizador fluída e eficiente.
 
 ## 🌟 Funcionalidades Principais
 
-* **Design Responsivo e Moderno:** Layout adaptável para desktop, tablet e mobile, com foco em uma experiência de utilizador intuitiva e agradável.
-* **Modo Claro/Escuro:** Alternância de tema para conforto visual em diferentes condições de iluminação, com persistência da preferência do utilizador via `localStorage`.
-* **Navegação Fluída:** Utilização do Vue Router para navegação entre secções e páginas sem recarregamento completo da página.
+* **Design Responsivo e Moderno:** Layout adaptável para desktop, tablet e mobile, com foco em uma experiência de
+  utilizador intuitiva e agradável.
+* **Modo Claro/Escuro:** Alternância de tema para conforto visual em diferentes condições de iluminação, com
+  persistência da preferência do utilizador via `localStorage`.
+* **Navegação Fluída:** Utilização do Vue Router para navegação entre secções e páginas sem recarregamento completo da
+  página.
 * **Secções Chave:**
     * **Início (Hero):** Apresentação inicial e chamada para ação.
     * **Sobre Mim:** Detalhes sobre a trajetória profissional, especializações e habilidades.
@@ -25,7 +31,8 @@ O projeto foi desenvolvido com Vue.js 3 (Composition API com `<script setup>`) e
 * **Vue.js 3:** Framework progressivo para construção de interfaces de utilizador.
     * **Composition API (`<script setup>`):** Para um código mais organizado e reutilizável.
 * **Vue Router:** Biblioteca oficial para roteamento declarativo em Vue.js.
-* **CSS Puro (Variáveis CSS):** Utilização de variáveis CSS para um sistema de tema robusto (Light/Dark Mode) e fácil gestão de estilos.
+* **CSS Puro (Variáveis CSS):** Utilização de variáveis CSS para um sistema de tema robusto (Light/Dark Mode) e fácil
+  gestão de estilos.
 * **HTML5 & CSS3:** Estrutura semântica e estilos modernos.
 * **Vite:** Ferramenta de construção rápida e otimizada para desenvolvimento front-end.
 * **Git:** Sistema de controlo de versão.
@@ -72,22 +79,23 @@ Este projeto utiliza o [Vite](https://vitejs.dev/) para um ambiente de desenvolv
 
 ### Pré-requisitos
 
-Certifique-se de ter o [Node.js](https://nodejs.org/) (versão LTS recomendada) e [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js) instalados na sua máquina.
+Certifique-se de ter o [Node.js](https://nodejs.org/) (versão LTS recomendada) e [npm](https://www.npmjs.com/) (
+gerenciador de pacotes do Node.js) instalados na sua máquina.
 
 ### Instalação
 
-1.  **Clone o repositório:**
+1. **Clone o repositório:**
 
-    ```bash
-    git clone https://github.com/mmaunze/cesario-machava-website.git
-    cd cesario-machava-website
-    ```
+   ```bash
+   git clone https://github.com/mmaunze/cesario-machava-website.git
+   cd cesario-machava-website
+   ```
 
-2.  **Instale as dependências:**
+2. **Instale as dependências:**
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 ### Executando em Modo de Desenvolvimento
 
@@ -131,16 +139,15 @@ npm run lint
 
 Contribuições são bem-vindas\! Se você tiver sugestões, melhorias ou encontrar algum bug, por favor:
 
-1.  Faça um fork do repositório.
-2.  Crie uma nova branch (`git checkout -b feature/sua-feature` ou `bugfix/seu-bug`).
-3.  Faça suas alterações e commit-as (`git commit -m 'feat: Adiciona nova funcionalidade'`).
-4.  Envie para a branch (`git push origin feature/sua-feature`).
-5.  Abra um Pull Request, descrevendo suas alterações.
+1. Faça um fork do repositório.
+2. Crie uma nova branch (`git checkout -b feature/sua-feature` ou `bugfix/seu-bug`).
+3. Faça suas alterações e commit-as (`git commit -m 'feat: Adiciona nova funcionalidade'`).
+4. Envie para a branch (`git push origin feature/sua-feature`).
+5. Abra um Pull Request, descrevendo suas alterações.
 
 ## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT. Consulte o ficheiro `LICENSE` para mais detalhes.
-
 
 ## 📞 Contacto
 

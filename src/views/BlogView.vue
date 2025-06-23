@@ -1,5 +1,5 @@
 <template>
-  <Header />
+
   <main>
     <section class="page-hero">
       <div class="container">
@@ -11,26 +11,35 @@
     <section class="blog-content-wrapper">
       <div class="container blog-layout">
         <div class="blog-main">
-          <div v-if="paginatedPosts.length > 0" class="blog-grid">
+          <div v-if="loading" class="loading-message">
+            <p>Carregando posts...</p>
+            <div class="spinner"></div>
+          </div>
+          <div v-else-if="error" class="error-message">
+            <p>{{ error }}</p>
+            <button class="btn-retry" @click="fetchPosts">Tentar Novamente</button>
+          </div>
+          <div v-else-if="paginatedPosts.length > 0" class="blog-grid">
             <div v-for="post in paginatedPosts" :key="post.id" class="blog-card animated">
-              <img :src="post.image" :alt="post.title" class="blog-card-image">
+              <img :alt="post.title" :src="post.imageUrl || '/src/assets/placeholder.jpg'" class="blog-card-image">
               <div class="blog-card-content">
-                <span class="blog-category" :style="{ backgroundColor: getCategoryColor(post.category) }">{{ post.category }}</span>
+                <span :style="{ backgroundColor: getCategoryColor(post.category) }"
+                      class="blog-category">{{ post.category }}</span>
                 <h3>{{ post.title }}</h3>
                 <p class="blog-excerpt">{{ post.excerpt }}</p>
                 <div class="blog-meta">
                   <span>{{ post.author }}</span>
                   <span>•</span>
-                  <span>{{ formatDate(post.date) }}</span>
+                  <span>{{ formatDate(post.publishDate) }}</span>
                   <span>•</span>
-                  <span>{{ post.readTime }} min de leitura</span>
+                  <span>{{ calculateReadTime(post.fullContent) }} min de leitura</span>
                 </div>
                 <router-link :to="`/blog/${post.slug}`" class="read-more-link">
                   Ler Mais
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                       viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                  <svg fill="currentColor" height="16" viewBox="0 0 16 16" width="16"
+                       xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                          fill-rule="evenodd"/>
                   </svg>
                 </router-link>
               </div>
@@ -41,15 +50,21 @@
           </div>
 
           <div v-if="totalPages > 1" class="pagination">
-            <button @click="currentPage--" :disabled="currentPage === 1" class="pagination-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            <button :disabled="currentPage === 1" class="pagination-btn" @click="currentPage--">
+              <svg fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"
+                   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.75 19.5L8.25 12l7.5-7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
-            <button v-for="page in totalPages" :key="page" @click="currentPage = page"
-                    :class="{ 'active': currentPage === page }" class="pagination-btn">
+            <button v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }"
+                    class="pagination-btn" @click="currentPage = page">
               {{ page }}
             </button>
-            <button @click="currentPage++" :disabled="currentPage === totalPages" class="pagination-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            <button :disabled="currentPage === totalPages" class="pagination-btn" @click="currentPage++">
+              <svg fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"
+                   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -58,9 +73,11 @@
           <div class="sidebar-block search-block">
             <h3>Pesquisar</h3>
             <div class="search-input-wrapper">
-              <input type="text" v-model="searchQuery" placeholder="Pesquisar posts..." class="search-input">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              <input v-model="searchQuery" class="search-input" placeholder="Pesquisar posts..." type="text">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
               </svg>
             </div>
           </div>
@@ -82,7 +99,7 @@
             <h3>Tags</h3>
             <div class="tag-cloud">
               <span v-for="tag in uniqueTags" :key="tag"
-                    :class="{ 'active': selectedTags.includes(tag) }" @click="toggleTag(tag)" class="tag-item">
+                    :class="{ 'active': selectedTags.includes(tag) }" class="tag-item" @click="toggleTag(tag)">
                 {{ tag }}
               </span>
               <span v-if="selectedTags.length > 0" class="clear-filters" @click="selectedTags = []">Limpar Tags</span>
@@ -92,125 +109,65 @@
       </div>
     </section>
   </main>
-  <Footer />
+
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import {computed, onMounted, ref, watch} from 'vue';
 
-// --- DATA SIMULATION ---
-const allBlogPosts = ref([
-  {
-    id: 1,
-    title: 'A Importância da Gestão de Ativos na Engenharia Civil',
-    excerpt: 'Descubra como a gestão eficiente de ativos pode prolongar a vida útil de infraestruturas e otimizar investimentos...',
-    category: 'Gestão de Ativos',
-    tags: ['engenharia', 'infraestrutura', 'otimização'],
-    author: 'Cesário Machava',
-    date: '2025-06-10',
-    readTime: 7,
-    image: '/src/assets/blog-placeholder-1.jpg',
-    slug: 'importancia-gestao-ativos'
-  },
-  {
-    id: 2,
-    title: 'Lean Six Sigma: Otimizando Processos na Construção',
-    excerpt: 'Explore os princípios do Lean Six Sigma e como aplicá-los para reduzir desperdícios e aumentar a produtividade em projetos de construção...',
-    category: 'Otimização de Processos',
-    tags: ['lean', 'six sigma', 'produtividade', 'construção'],
-    author: 'Cesário Machava',
-    date: '2025-05-28',
-    readTime: 9,
-    image: '/src/assets/blog-placeholder-2.jpg',
-    slug: 'lean-six-sigma-construcao'
-  },
-  {
-    id: 3,
-    title: 'Mitigação de Risco Operacional em Grandes Empreendimentos',
-    excerpt: 'Um guia prático sobre estratégias para identificar, avaliar e mitigar riscos operacionais em projetos de engenharia civil de alta complexidade...',
-    category: 'Risco Operacional',
-    tags: ['risco', 'segurança', 'gestão'],
-    author: 'Cesário Machava',
-    date: '2025-05-15',
-    readTime: 8,
-    image: '/src/assets/blog-placeholder-3.jpg',
-    slug: 'mitigacao-risco-operacional'
-  },
-  {
-    id: 4,
-    title: 'Sustentabilidade e Inovação em Materiais de Construção',
-    excerpt: 'Análise das últimas inovações em materiais de construção sustentáveis e seu impacto no futuro da engenharia civil...',
-    category: 'Sustentabilidade',
-    tags: ['verde', 'inovação', 'materiais'],
-    author: 'Cesário Machava',
-    date: '2025-04-30',
-    readTime: 6,
-    image: '/src/assets/blog-placeholder-4.jpg',
-    slug: 'sustentabilidade-materiais'
-  },
-  {
-    id: 5,
-    title: 'O Papel da Tecnologia na Gestão de Projetos de Engenharia',
-    excerpt: 'Como as novas tecnologias, como BIM e IoT, estão revolucionando a forma como os projetos de engenharia civil são gerenciados e executados...',
-    category: 'Tecnologia',
-    tags: ['digital', 'inovação', 'BIM', 'IoT'],
-    author: 'Cesário Machava',
-    date: '2025-04-18',
-    readTime: 7,
-    image: '/src/assets/blog-placeholder-5.jpg',
-    slug: 'tecnologia-gestao-projetos'
-  },
-  {
-    id: 6,
-    title: 'Planeamento Estratégico para Infraestruturas Resilientes',
-    excerpt: 'Discussão sobre a importância do planeamento estratégico a longo prazo para construir infraestruturas capazes de resistir a desafios futuros...',
-    category: 'Planeamento',
-    tags: ['estratégia', 'resiliência', 'futuro'],
-    author: 'Cesário Machava',
-    date: '2025-04-05',
-    readTime: 10,
-    image: '/src/assets/blog-placeholder-6.jpg',
-    slug: 'planeamento-infraestruturas'
-  },
-  {
-    id: 7,
-    title: 'A Economia Circular na Construção Civil',
-    excerpt: 'Como a economia circular pode transformar o setor da construção, promovendo a reutilização e a redução de resíduos.',
-    category: 'Sustentabilidade',
-    tags: ['sustentabilidade', 'reciclagem', 'economia'],
-    author: 'Cesário Machava',
-    date: '2025-03-20',
-    readTime: 8,
-    image: '/src/assets/blog-placeholder-7.jpg',
-    slug: 'economia-circular-construcao'
-  },
-  {
-    id: 8,
-    title: 'Desafios e Oportunidades na Gestão de Projetos de Grande Escala',
-    excerpt: 'Análise dos principais desafios na gestão de grandes projetos e como superá-los para garantir o sucesso.',
-    category: 'Gestão de Projetos',
-    tags: ['projetos', 'desafios', 'liderança'],
-    author: 'Cesário Machava',
-    date: '2025-03-01',
-    readTime: 12,
-    image: '/src/assets/blog-placeholder-8.jpg',
-    slug: 'desafios-grandes-projetos'
-  },
-  {
-    id: 9,
-    title: 'Aplicação de Big Data na Manutenção Preditiva de Ativos',
-    excerpt: 'Descubra como a análise de Big Data pode otimizar a manutenção de ativos, prevendo falhas antes que ocorram.',
-    category: 'Tecnologia',
-    tags: ['dados', 'manutenção', 'preditiva'],
-    author: 'Cesário Machava',
-    date: '2025-02-15',
-    readTime: 9,
-    image: '/src/assets/blog-placeholder-9.jpg',
-    slug: 'big-data-manutencao-preditiva'
-  },
-]);
+import api from '@/services/api'; // Importa o serviço de API
+
+// Estado para os posts
+const allBlogPosts = ref([]); // Será preenchido pela API
+const loading = ref(true);
+const error = ref(null);
+
+// Função para buscar posts da API
+const fetchPosts = async () => {
+  loading.value = true;
+  error.value = null; // Limpa erros anteriores
+  try {
+    // A API já deve retornar posts ordenados por publishDate (mais recente primeiro)
+    allBlogPosts.value = await api.getAllPosts();
+  } catch (err) {
+    console.error('Erro ao buscar posts:', err);
+    error.value = 'Não foi possível carregar os posts. Por favor, tente novamente mais tarde.';
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Chama a função de busca ao montar o componente
+onMounted(() => {
+  fetchPosts();
+  // Inicializa o observer para animações após os dados serem carregados (ou como fallback)
+  // É melhor observar os elementos dinamicamente quando eles são renderizados
+  watch(paginatedPosts, () => {
+    // Certifica-se de que os cards estão no DOM antes de observá-los
+    requestAnimationFrame(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // observer.unobserve(entry.target); // Deixa de observar depois de visível (opcional)
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      document.querySelectorAll('.blog-card.animated').forEach(card => {
+        // Evita observar o mesmo card várias vezes se já estiver visível
+        if (!card.classList.contains('visible')) {
+          observer.observe(card);
+        }
+      });
+    });
+  }, {immediate: true}); // Executa a observação inicial assim que paginatedPosts é populado
+});
+
 
 // --- FILTERS AND SEARCH ---
 const searchQuery = ref('');
@@ -228,7 +185,8 @@ const filteredPosts = computed(() => {
         post.excerpt.toLowerCase().includes(query) ||
         post.author.toLowerCase().includes(query) ||
         post.category.toLowerCase().includes(query) ||
-        post.tags.some(tag => tag.toLowerCase().includes(query))
+        // Verifica se 'tags' existe e é um array antes de usar some()
+        (post.tags && Array.isArray(post.tags) && post.tags.some(tag => tag.toLowerCase().includes(query)))
     );
   }
 
@@ -240,7 +198,7 @@ const filteredPosts = computed(() => {
   // Filter by tags (AND logic: post must have ALL selected tags)
   if (selectedTags.value.length > 0) {
     posts = posts.filter(post =>
-        selectedTags.value.every(tag => post.tags.includes(tag))
+        (post.tags && Array.isArray(post.tags) && selectedTags.value.every(tag => post.tags.includes(tag)))
     );
   }
 
@@ -250,7 +208,9 @@ const filteredPosts = computed(() => {
 // --- CATEGORY AND TAGS COMPUTED PROPERTIES ---
 const uniqueCategories = computed(() => {
   const categories = new Set();
-  allBlogPosts.value.forEach(post => categories.add(post.category));
+  allBlogPosts.value.forEach(post => {
+    if (post.category) categories.add(post.category); // Adiciona apenas se houver categoria
+  });
   return Array.from(categories).sort();
 });
 
@@ -262,7 +222,12 @@ const allCategoriesCount = computed(() => allBlogPosts.value.length);
 
 const uniqueTags = computed(() => {
   const tags = new Set();
-  allBlogPosts.value.forEach(post => post.tags.forEach(tag => tags.add(tag)));
+  allBlogPosts.value.forEach(post => {
+    // Verifica se 'tags' existe e é um array antes de iterar
+    if (post.tags && Array.isArray(post.tags)) {
+      post.tags.forEach(tag => tags.add(tag));
+    }
+  });
   return Array.from(tags).sort();
 });
 
@@ -296,8 +261,18 @@ watch([searchQuery, selectedCategory, selectedTags], () => {
 
 // --- UTILITY FUNCTIONS ---
 const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  if (!dateString) return '';
+  const options = {year: 'numeric', month: 'long', day: 'numeric'};
   return new Date(dateString).toLocaleDateString('pt-PT', options);
+};
+
+const calculateReadTime = (content) => {
+  if (!content) return 0;
+  // Regex para remover tags HTML
+  const cleanContent = content.replace(/<\/?[^>]+(>|$)/g, "");
+  const wordsPerMinute = 200; // Média de palavras por minuto
+  const wordCount = cleanContent.split(/\s+/).length;
+  return Math.ceil(wordCount / wordsPerMinute);
 };
 
 const getCategoryColor = (category) => {
@@ -309,49 +284,63 @@ const getCategoryColor = (category) => {
     'Sustentabilidade': 'var(--accent-teal)',
     'Tecnologia': 'var(--secondary-blue)',
     'Planeamento': 'var(--secondary-orange)',
-    'Gestão de Projetos': 'var(--primary-blue)', // Reutilizar cores
+    'Gestão de Projetos': 'var(--primary-blue)',
     // Adicione mais mapeamentos conforme necessário para outras categorias
   };
   return colors[category] || 'var(--text-muted)'; // Cor padrão se não mapeada
 };
 
-// --- ANIMATIONS ---
-onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // observer.unobserve(entry.target); // Deixa de observar depois de visível
-        // Descomente a linha acima se quiser que a animação ocorra apenas uma vez.
-        // Mantenho comentada para que, se o utilizador rolar para cima e para baixo, a animação possa reativar (opcional).
-      } else {
-        entry.target.classList.remove('visible'); // Remove a classe quando não está visível
-      }
-    });
-  }, {
-    threshold: 0.1 // Ativa quando 10% do elemento está visível
-  });
-
-  // Observa todos os cards do blog (ou outros elementos .animated que queira animar)
-  // Certifique-se de que 'animated' esteja na classe do elemento no template
-  document.querySelectorAll('.blog-card.animated').forEach(card => {
-    observer.observe(card);
-  });
-});
 </script>
 
 <style scoped>
-/*
-  IMPORTANTE: As variáveis CSS (--primary-blue, --bg-body, etc.)
-  já devem estar definidas no seu arquivo src/App.vue (estilos globais).
-  Este arquivo BlogView.vue.css apenas referenciará essas variáveis.
 
-  A largura máxima de 2016px para o conteúdo principal deve ser gerenciada
-  no `App.vue` ou em um layout wrapper, não diretamente aqui para o container,
-  que deve ter max-width: 1200px para o conteúdo interno.
-*/
 
-/* Page Hero (comum para Downloads e Blog) */
+/* Novos estilos para loading e erro */
+.loading-message, .error-message {
+  text-align: center;
+  padding: 3rem 0;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  grid-column: 1 / -1; /* Ocupa toda a largura do grid */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spinner {
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-blue);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-retry {
+  background: var(--primary-blue);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-retry:hover {
+  background: var(--secondary-blue);
+}
+
 .page-hero {
   background: var(--gradient-accent); /* Usando um gradiente verde para downloads */
   color: white;
@@ -716,6 +705,7 @@ onMounted(() => {
   text-decoration: underline;
   transition: color 0.3s ease;
 }
+
 .clear-filters:hover {
   color: var(--secondary-orange);
 }
@@ -777,22 +767,28 @@ onMounted(() => {
   .container {
     padding: 0 1rem;
   }
+
   .blog-card-content {
     padding: 1.2rem;
   }
+
   .blog-card-content h3 {
     font-size: 1.1rem;
   }
+
   .blog-category {
     font-size: 0.7rem;
     padding: 0.2rem 0.6rem;
   }
+
   .blog-meta {
     font-size: 0.75rem;
   }
+
   .sidebar-block h3 {
     font-size: 1.2rem;
   }
+
   .tag-item {
     font-size: 0.8rem;
     padding: 0.5rem 0.8rem;

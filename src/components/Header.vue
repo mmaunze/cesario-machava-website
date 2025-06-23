@@ -1,22 +1,28 @@
 <template>
   <header>
     <nav class="container">
-      <router-link to="/" class="logo">CM</router-link>
-      <ul class="nav-menu" :class="{ active: isMobileMenuOpen }" id="navMenu">
-        <li><router-link to="/" @click="closeMobileMenu">Início</router-link></li>
-        <li><router-link to="/blog" @click="closeMobileMenu">Blog</router-link></li>
-        <li><router-link to="/downloads" @click="closeMobileMenu">Downloads</router-link></li>
+      <router-link class="logo" to="/">CM</router-link>
+      <ul id="navMenu" :class="{ active: isMobileMenuOpen }" class="nav-menu">
+        <li>
+          <router-link to="/" @click="closeMobileMenu">Início</router-link>
+        </li>
+        <li>
+          <router-link to="/blog" @click="closeMobileMenu">Blog</router-link>
+        </li>
+        <li>
+          <router-link to="/downloads" @click="closeMobileMenu">Downloads</router-link>
+        </li>
         <li>
           <div class="theme-switch-wrapper">
             <label class="theme-switch" for="checkbox">
-              <input type="checkbox" id="checkbox" @change="toggleTheme" :checked="isDarkMode"
-                     aria-label="Alternar tema para modo escuro">
+              <input id="checkbox" :checked="isDarkMode" aria-label="Alternar tema para modo escuro" type="checkbox"
+                     @change="toggleTheme">
               <span class="slider"></span>
             </label>
           </div>
         </li>
       </ul>
-      <div class="menu-toggle" :class="{ active: isMobileMenuOpen }" @click="toggleMobileMenu" id="mobileMenuToggle">
+      <div id="mobileMenuToggle" :class="{ active: isMobileMenuOpen }" class="menu-toggle" @click="toggleMobileMenu">
         <span></span>
         <span></span>
         <span></span>
@@ -26,8 +32,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
 
 const isMobileMenuOpen = ref(false);
 const isDarkMode = ref(false);
@@ -127,7 +133,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
- /* padding: 1rem 0;*/
+  /* padding: 1rem 0;*/
   height: 75px;
 }
 
@@ -241,11 +247,11 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background: var(--gradient-primary);
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   transform: translateX(26px);
 }
 
