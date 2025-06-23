@@ -79,7 +79,7 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) (versão LTS recomendada) 
 1.  **Clone o repositório:**
 
     ```bash
-    git clone [https://github.com/mmaunze/cesario-machava-website.git](https://github.com/o-seu-usuario/cesario-machava-website.git)
+    git clone https://github.com/mmaunze/cesario-machava-website.git
     cd cesario-machava-website
     ```
 
