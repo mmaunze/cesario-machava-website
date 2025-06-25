@@ -1,6 +1,6 @@
 # Website Pessoal - Cesário Machava
 
-![Banner do Projeto](public/banner-cesario-machava.png) Este é o website pessoal e profissional de Cesário Machava, Engenheiro Civil e especialista em Gestão de Ativos, Risco Operacional e Lean Six Sigma. O objetivo deste projeto é criar uma presença online moderna, profissional e responsiva, destacando a sua experiência, projetos e conhecimentos.
+Este é o website pessoal e profissional de Cesário Machava, Engenheiro Civil e especialista em Gestão de Ativos, Risco Operacional e Lean Six Sigma. O objetivo deste projeto é criar uma presença online moderna, profissional e responsiva, destacando a sua experiência, projetos e conhecimentos.
 
 O projeto foi desenvolvido com Vue.js 3 (Composition API com `<script setup>`) e Vue Router para uma experiência de utilizador fluída e eficiente.
 
@@ -79,8 +79,8 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) (versão LTS recomendada) 
 1.  **Clone o repositório:**
 
     ```bash
-    git clone https://github.com/mmaunze/cesario-machava-website.git
-    cd cesario-machava-website
+    git clone https://github.com/mmaunze/personal-portfolio-website.git
+    cd personal-portfolio-website
     ```
 
 2.  **Instale as dependências:**
