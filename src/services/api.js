@@ -45,12 +45,33 @@ const api = {
     }
   },
 
+
+    getAllProjects: async () => {
+    try {
+      const response = await apiClient.get("/projects");
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar todos os projects:", error);
+      throw error; // Re-lança o erro para o componente lidar
+    }
+  },
+
   getPostBySlug: async (slug) => {
     try {
       const response = await apiClient.get(`/posts/${slug}`);
       return response.data;
     } catch (error) {
       console.error(`Erro ao buscar post com slug ${slug}:`, error);
+      throw error;
+    }
+  },
+
+   getProjectBySlug: async (slug) => {
+    try {
+      const response = await apiClient.get(`/projects/${slug}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar projects com slug ${slug}:`, error);
       throw error;
     }
   },

@@ -29,7 +29,7 @@ const routes = [
     component: PortfolioView,
   },
   {
-    path: "/portfolio/:id",
+    path: "/portfolio/:slug",
     name: "PortfolioDetail",
     component: PortfolioDetailView,
   },

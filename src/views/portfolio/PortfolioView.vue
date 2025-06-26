@@ -17,22 +17,22 @@
             <h3>Pesquisar</h3>
             <div class="search-input-wrapper">
               <input
-                v-model="searchQuery"
-                class="search-input"
-                placeholder="Pesquisar projetos..."
-                type="text"
+                  v-model="searchQuery"
+                  class="search-input"
+                  placeholder="Pesquisar projetos..."
+                  type="text"
               />
               <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5.7.5 0 0010.607 10.607Z"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5.7.5 0 0010.607 10.607Z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                 />
               </svg>
             </div>
@@ -42,17 +42,17 @@
             <h3>Categorias</h3>
             <ul class="filter-list">
               <li
-                :class="{ active: selectedCategory === null }"
-                @click="filterByCategory(null)"
+                  :class="{ active: selectedCategory === null }"
+                  @click="filterByCategory(null)"
               >
                 Todas as Categorias
                 <span class="count">({{ allProjectsCount }})</span>
               </li>
               <li
-                v-for="category in uniqueCategories"
-                :key="category"
-                :class="{ active: selectedCategory === category }"
-                @click="filterByCategory(category)"
+                  v-for="category in uniqueCategories"
+                  :key="category"
+                  :class="{ active: selectedCategory === category }"
+                  @click="filterByCategory(category)"
               >
                 {{ category }}
                 <span class="count">({{ getCategoryCount(category) }})</span>
@@ -64,19 +64,19 @@
             <h3>Tags</h3>
             <div class="tag-cloud">
               <span
-                v-for="tag in uniqueTags"
-                :key="tag"
-                :class="{ active: selectedTags.includes(tag) }"
-                class="tag-item"
-                @click="toggleTag(tag)"
+                  v-for="tag in uniqueTags"
+                  :key="tag"
+                  :class="{ active: selectedTags.includes(tag) }"
+                  class="tag-item"
+                  @click="toggleTag(tag)"
               >
                 {{ tag }}
               </span>
               <span
-                v-if="selectedTags.length > 0"
-                class="clear-filters"
-                @click="selectedTags = []"
-                >Limpar Tags</span
+                  v-if="selectedTags.length > 0"
+                  class="clear-filters"
+                  @click="selectedTags = []"
+              >Limpar Tags</span
               >
             </div>
           </div>
@@ -85,15 +85,15 @@
         <div class="portfolio-main">
           <div v-if="paginatedProjects.length > 0" class="projects-grid">
             <div
-              v-for="project in paginatedProjects"
-              :key="project.id"
-              class="project-card animated"
+                v-for="project in paginatedProjects"
+                :key="project.id"
+                class="project-card animated"
             >
               <div class="project-image-container">
                 <img
-                  :src="project.image"
-                  :alt="project.name"
-                  class="project-image"
+                    :src="project.image"
+                    :alt="project.name"
+                    class="project-image"
                 />
               </div>
               <div class="project-content">
@@ -102,13 +102,13 @@
                 <div class="project-meta">
                   <span>{{ project.category }}</span>
                   <span
-                    >Concluído em:
+                  >Concluído em:
                     {{ formatDate(project.completionDate) }}</span
                   >
                 </div>
                 <router-link
-                  :to="{ name: 'PortfolioDetail', params: { id: project.id } }"
-                  class="btn-view-project"
+                    :to="{ name: 'PortfolioDetail', params: { slug: project.id } }"
+                    class="btn-view-project"
                 >
                   Ver Projeto
                 </router-link>
@@ -121,51 +121,51 @@
 
           <div v-if="totalPages > 1" class="pagination">
             <button
-              :disabled="currentPage === 1"
-              class="pagination-btn pagination-prev"
-              @click="changePage(currentPage - 1)"
+                :disabled="currentPage === 1"
+                class="pagination-btn pagination-prev"
+                @click="changePage(currentPage - 1)"
             >
               <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                style="width: 20px; height: 20px"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  style="width: 20px; height: 20px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                 />
               </svg>
             </button>
             <button
-              v-for="page in totalPages"
-              :key="page"
-              :class="{ active: currentPage === page }"
-              class="pagination-btn"
-              @click="changePage(page)"
+                v-for="page in totalPages"
+                :key="page"
+                :class="{ active: currentPage === page }"
+                class="pagination-btn"
+                @click="changePage(page)"
             >
               {{ page }}
             </button>
             <button
-              :disabled="currentPage === totalPages"
-              class="pagination-btn pagination-next"
-              @click="changePage(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+                class="pagination-btn pagination-next"
+                @click="changePage(currentPage + 1)"
             >
               <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                style="width: 20px; height: 20px"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  style="width: 20px; height: 20px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                 />
               </svg>
             </button>
@@ -185,7 +185,7 @@ const allPortfolioProjects = ref([
     id: 101,
     name: "Construção do Edifício Corporativo Blue Sky",
     description:
-      "Projeto de construção de um moderno edifício de escritórios com foco em sustentabilidade e eficiência energética.",
+        "Projeto de construção de um moderno edifício de escritórios com foco em sustentabilidade e eficiência energética.",
     category: "Edificações",
     tags: [
       "corporativo",
@@ -194,7 +194,7 @@ const allPortfolioProjects = ref([
       "eficiência energética",
     ],
     image:
-      "https://via.placeholder.com/400x250/4B84CB/FFFFFF?text=EdificioBlueSky", // Exemplo de imagem
+        "https://via.placeholder.com/400x250/4B84CB/FFFFFF?text=EdificioBlueSky", // Exemplo de imagem
     completionDate: "2024-11-20",
     projectLink: "https://example.com/project/bluesky", // Link para a página do projeto
   },
@@ -202,11 +202,11 @@ const allPortfolioProjects = ref([
     id: 102,
     name: "Otimização de Redes de Saneamento Urbano",
     description:
-      "Estudo e implementação de soluções para aprimorar a infraestrutura de saneamento em áreas urbanas densas.",
+        "Estudo e implementação de soluções para aprimorar a infraestrutura de saneamento em áreas urbanas densas.",
     category: "Infraestrutura",
     tags: ["saneamento", "urbano", "infraestrutura", "engenharia hídrica"],
     image:
-      "https://via.placeholder.com/400x250/33A02C/FFFFFF?text=SaneamentoUrbano",
+        "https://via.placeholder.com/400x250/33A02C/FFFFFF?text=SaneamentoUrbano",
     completionDate: "2023-08-15",
     projectLink: "https://example.com/project/saneamento",
   },
@@ -214,11 +214,11 @@ const allPortfolioProjects = ref([
     id: 103,
     name: "Reabilitação da Ponte Histórica Rio Claro",
     description:
-      "Projeto de engenharia de recuperação estrutural e restauro estético de uma ponte centenária.",
+        "Projeto de engenharia de recuperação estrutural e restauro estético de uma ponte centenária.",
     category: "Restauro",
     tags: ["pontes", "restauro", "engenharia estrutural", "histórico"],
     image:
-      "https://via.placeholder.com/400x250/C1573A/FFFFFF?text=PonteRioClaro",
+        "https://via.placeholder.com/400x250/C1573A/FFFFFF?text=PonteRioClaro",
     completionDate: "2024-03-10",
     projectLink: "https://example.com/project/rioclaro",
   },
@@ -226,11 +226,11 @@ const allPortfolioProjects = ref([
     id: 104,
     name: "Plano Diretor de Desenvolvimento Urbano Sustentável",
     description:
-      "Elaboração de um plano estratégico para o crescimento urbano com princípios de sustentabilidade e resiliência.",
+        "Elaboração de um plano estratégico para o crescimento urbano com princípios de sustentabilidade e resiliência.",
     category: "Planejamento Urbano",
     tags: ["planejamento", "urbano", "sustentabilidade", "resiliência"],
     image:
-      "https://via.placeholder.com/400x250/6A3D9A/FFFFFF?text=PlanoDiretor",
+        "https://via.placeholder.com/400x250/6A3D9A/FFFFFF?text=PlanoDiretor",
     completionDate: "2025-01-25",
     projectLink: "https://example.com/project/planodiretor",
   },
@@ -238,11 +238,11 @@ const allPortfolioProjects = ref([
     id: 105,
     name: "Gestão de Resíduos em Grande Escala Industrial",
     description:
-      "Consultoria e implementação de sistemas de gestão de resíduos sólidos para complexos industriais.",
+        "Consultoria e implementação de sistemas de gestão de resíduos sólidos para complexos industriais.",
     category: "Gestão Ambiental",
     tags: ["resíduos", "industrial", "gestão ambiental", "sustentabilidade"],
     image:
-      "https://via.placeholder.com/400x250/FF7F00/FFFFFF?text=ResiduosIndustriais",
+        "https://via.placeholder.com/400x250/FF7F00/FFFFFF?text=ResiduosIndustriais",
     completionDate: "2024-07-01",
     projectLink: "https://example.com/project/residuos",
   },
@@ -250,11 +250,11 @@ const allPortfolioProjects = ref([
     id: 106,
     name: "Automação e Otimização de Canteiros de Obra",
     description:
-      "Implementação de tecnologias de automação e IoT para aumentar a eficiência e segurança em canteiros de obra.",
+        "Implementação de tecnologias de automação e IoT para aumentar a eficiência e segurança em canteiros de obra.",
     category: "Inovação",
     tags: ["automação", "IoT", "canteiro de obra", "inovação", "eficiência"],
     image:
-      "https://via.placeholder.com/400x250/1F78B4/FFFFFF?text=AutomacaoCanteiro",
+        "https://via.placeholder.com/400x250/1F78B4/FFFFFF?text=AutomacaoCanteiro",
     completionDate: "2023-11-30",
     projectLink: "https://example.com/project/automacao",
   },
@@ -262,11 +262,11 @@ const allPortfolioProjects = ref([
     id: 107,
     name: "Projeto de Parque Urbano Verde Vivo",
     description:
-      "Criação de um novo espaço público com foco em áreas verdes, lazer e infraestrutura sustentável.",
+        "Criação de um novo espaço público com foco em áreas verdes, lazer e infraestrutura sustentável.",
     category: "Paisagismo Urbano",
     tags: ["paisagismo", "parque", "urbano", "lazer", "espaços públicos"],
     image:
-      "https://via.placeholder.com/400x250/B2DF8A/333333?text=ParqueVerdeVivo",
+        "https://via.placeholder.com/400x250/B2DF8A/333333?text=ParqueVerdeVivo",
     completionDate: "2024-09-05",
     projectLink: "https://example.com/project/parquevivo",
   },
@@ -289,25 +289,25 @@ const filteredProjects = computed(() => {
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase();
     projects = projects.filter(
-      (project) =>
-        project.name.toLowerCase().includes(query) ||
-        project.description.toLowerCase().includes(query) ||
-        project.category.toLowerCase().includes(query) ||
-        project.tags.some((tag) => tag.toLowerCase().includes(query)),
+        (project) =>
+            project.name.toLowerCase().includes(query) ||
+            project.description.toLowerCase().includes(query) ||
+            project.category.toLowerCase().includes(query) ||
+            project.tags.some((tag) => tag.toLowerCase().includes(query)),
     );
   }
 
   // Filtrar por categoria
   if (selectedCategory.value) {
     projects = projects.filter(
-      (project) => project.category === selectedCategory.value,
+        (project) => project.category === selectedCategory.value,
     );
   }
 
   // Filtrar por tags (lógica AND: o projeto deve ter TODAS as tags selecionadas)
   if (selectedTags.value.length > 0) {
     projects = projects.filter((project) =>
-      selectedTags.value.every((tag) => project.tags.includes(tag)),
+        selectedTags.value.every((tag) => project.tags.includes(tag)),
     );
   }
 
@@ -330,14 +330,14 @@ const totalPages = computed(() => {
 const uniqueCategories = computed(() => {
   const categories = new Set();
   allPortfolioProjects.value.forEach((project) =>
-    categories.add(project.category),
+      categories.add(project.category),
   );
   return Array.from(categories).sort();
 });
 
 const getCategoryCount = (category) => {
   return allPortfolioProjects.value.filter(
-    (project) => project.category === category,
+      (project) => project.category === category,
   ).length;
 };
 
@@ -347,7 +347,7 @@ const allProjectsCount = computed(() => allPortfolioProjects.value.length);
 const uniqueTags = computed(() => {
   const tags = new Set();
   allPortfolioProjects.value.forEach((project) =>
-    project.tags.forEach((tag) => tags.add(tag)),
+      project.tags.forEach((tag) => tags.add(tag)),
   );
   return Array.from(tags).sort();
 });
@@ -386,28 +386,28 @@ const formatDate = (dateString) => {
 
 // Observa mudanças nos projetos filtrados para resetar a página se a lista ficar vazia ou mudar drasticamente
 watch(
-  [filteredProjects, searchQuery, selectedCategory, selectedTags],
-  () => {
-    currentPage.value = 1; // Sempre resetar a página para 1 quando os filtros mudam
-  },
-  { immediate: true },
+    [filteredProjects, searchQuery, selectedCategory, selectedTags],
+    () => {
+      currentPage.value = 1; // Sempre resetar a página para 1 quando os filtros mudam
+    },
+    { immediate: true },
 ); // Executar imediatamente para configurar a página inicial
 
 // --- ANIMATIONS ---
 onMounted(() => {
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        } else {
-          entry.target.classList.remove("visible");
-        }
-      });
-    },
-    {
-      threshold: 0.1, // Ativa quando 10% do elemento está visível
-    },
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          } else {
+            entry.target.classList.remove("visible");
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Ativa quando 10% do elemento está visível
+      },
   );
 
   // Observa todos os cards de projeto para animação
