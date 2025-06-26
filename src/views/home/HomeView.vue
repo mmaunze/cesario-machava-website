@@ -1,20 +1,26 @@
 <template>
-
   <main>
     <section id="home" class="hero-section">
       <div class="container hero-content">
         <div class="hero-text">
-          <h1>Cesário Machava</h1>
-          <h2>Engenheiro Civil | Gestão de Ativos | Otimização de Processos</h2>
-          <p>Potenciando o seu negócio com soluções de engenharia inovadoras, gestão estratégica de ativos e
-            melhoria contínua em Moçambique e além.</p>
+          <h1>{{ userInfo.nomeCompleto }}</h1>
+          <h2>{{ userInfo.cargo }}</h2>
+          <p>{{ userInfo.objectivo }}</p>
           <div class="hero-buttons">
-            <router-link class="btn-primary" to="/downloads">Aceder Downloads</router-link>
-            <router-link class="btn-secondary" to="/blog">Explorar Blog</router-link>
+            <router-link class="btn-primary" to="/downloads"
+              >Aceder Downloads</router-link
+            >
+            <router-link class="btn-secondary" to="/blog"
+              >Explorar Blog</router-link
+            >
           </div>
         </div>
         <div class="hero-image">
-          <img alt="Placeholder de imagem para Cesário Machava" class="responsive-image" src="">
+          <img
+            alt="Placeholder de imagem para Cesário Machava"
+            class="responsive-image"
+            src="@/assets/imagens/img.png"
+          />
         </div>
       </div>
     </section>
@@ -24,19 +30,19 @@
         <h3>Quem Sou Eu</h3>
         <div class="about-grid">
           <div class="about-image">
-            <img alt="Cesário Machava" class="responsive-image" src="">
+            <img
+              alt="Cesário Machava"
+              class="responsive-image"
+              src="@/assets/imagens/img.png"
+            />
           </div>
           <div class="about-text">
-            <p>Com uma sólida formação em Engenharia Civil e uma paixão inabalável pela eficiência e inovação,
-              dedico-me a ajudar organizações a otimizar as suas operações e a maximizar o valor dos seus ativos.
-            </p>
-            <p>A minha experiência abrange desde a <strong>gestão estratégica de ativos</strong>, garantindo o
-              desempenho e a longevidade da infraestrutura, até a implementação de metodologias como
-              <strong>Lean Six Sigma</strong> para a otimização de processos e redução de desperdícios.</p>
-            <p>Acredito que a engenharia vai além da construção; é sobre construir soluções sustentáveis e
-              eficientes que impulsionam o progresso e a resiliência. Explore o meu trabalho e veja como posso
-              contribuir para o seu próximo desafio.</p>
-            <router-link class="btn-primary-outline" to="/downloads">Ver Currículo</router-link>
+            <p>{{ userInfo.resumo.sobre }}</p>
+            <p>{{ userInfo.resumo.experincias }}</p>
+            <p>{{ userInfo.resumo.crencas }}</p>
+            <router-link class="btn-primary-outline" to="/downloads"
+              >Ver Currículo</router-link
+            >
           </div>
         </div>
       </div>
@@ -48,39 +54,69 @@
         <div class="services-grid">
           <div class="service-card">
             <div class="icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"
-                      stroke-linejoin="round"/>
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <h4>Gestão de Ativos</h4>
-            <p>Otimização do ciclo de vida de ativos físicos para maximizar o seu valor e desempenho, minimizando
-              custos e riscos.</p>
+            <p>
+              Otimização do ciclo de vida de ativos físicos para maximizar o seu
+              valor e desempenho, minimizando custos e riscos.
+            </p>
           </div>
           <div class="service-card">
             <div class="icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.125 2.25A1.125 1.125 0 0111.25 3.375V8.25m-1.125 8.625v-1.5m0 1.5c-1.425 0-2.85-.375-4.07-.674m-2.13-0.573a11.924 11.924 0 01-1.014-.543m12.227-.416a11.924 11.924 0 011.014.543m-2.13 0c1.425 0 2.85.375 4.07.674M9.25 15v1.5m0-4.625h-1.5m1.5 4.625h1.5m-1.5-4.625c1.425 0 2.85-.375 4.07-.674m-2.13-0.573a11.924 11.924 0 01-1.014-.543m12.227-.416a11.924 11.924 0 011.014.543m-2.13 0c1.425 0 2.85.375 4.07.674m-4.07.674c-1.425 0-2.85-.375-4.07-.674m-2.13-0.573a11.924 11.924 0 01-1.014-.543m12.227-.416a11.924 11.924 0 011.014.543m-2.13 0c1.425 0 2.85.375 4.07.674m-4.07.674c-1.425 0-2.85-.375-4.07-.674" stroke-linecap="round"
-                      stroke-linejoin="round"/>
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.125 2.25A1.125 1.125 0 0111.25 3.375V8.25m-1.125 8.625v-1.5m0 1.5c-1.425 0-2.85-.375-4.07-.674m-2.13-0.573a11.924 11.924 0 01-1.014-.543m12.227-.416a11.924 11.924 0 011.014.543m-2.13 0c1.425 0 2.85.375 4.07.674M9.25 15v1.5m0-4.625h-1.5m1.5 4.625h1.5m-1.5-4.625c1.425 0 2.85-.375 4.07-.674m-2.13-0.573a11.924 11.924 0 01-1.014-.543m12.227-.416a11.924 11.924 0 011.014.543m-2.13 0c1.425 0 2.85.375 4.07.674m-4.07.674c-1.425 0-2.85-.375-4.07-.674m-2.13-0.573a11.924 11.924 0 01-1.014-.543m12.227-.416a11.924 11.924 0 011.014.543m-2.13 0c1.425 0 2.85.375 4.07.674m-4.07.674c-1.425 0-2.85-.375-4.07-.674"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <h4>Risco Operacional</h4>
-            <p>Identificação, avaliação e mitigação de riscos que podem afetar a continuidade e a eficiência das
-              operações empresariais.</p>
+            <p>
+              Identificação, avaliação e mitigação de riscos que podem afetar a
+              continuidade e a eficiência das operações empresariais.
+            </p>
           </div>
           <div class="service-card">
             <div class="icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125v-6.75zM10.875 5.25c-.621 0-1.125.504-1.125 1.125v12.75c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125V6.375c0-.621-.504-1.125-1.125-1.125h-2.25zM18.75 9.75c-.621 0-1.125.504-1.125 1.125v9c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125v-9c0-.621-.504-1.125-1.125-1.125h-2.25z" stroke-linecap="round"
-                      stroke-linejoin="round"/>
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125v-6.75zM10.875 5.25c-.621 0-1.125.504-1.125 1.125v12.75c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125V6.375c0-.621-.504-1.125-1.125-1.125h-2.25zM18.75 9.75c-.621 0-1.125.504-1.125 1.125v9c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125v-9c0-.621-.504-1.125-1.125-1.125h-2.25z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <h4>Lean Six Sigma</h4>
-            <p>Aplicação de metodologias para eliminar desperdícios, reduzir variabilidade e melhorar a qualidade
-              e a eficiência.</p>
+            <p>
+              Aplicação de metodologias para eliminar desperdícios, reduzir
+              variabilidade e melhorar a qualidade e a eficiência.
+            </p>
           </div>
         </div>
       </div>
@@ -89,47 +125,71 @@
     <section id="portfolio" class="portfolio-section">
       <div class="container">
         <h3>Meu Portfólio</h3>
-        <p class="section-subtitle">Projetos e iniciativas que demonstram a aplicação prática das minhas
-          habilidades.</p>
+        <p class="section-subtitle">
+          Projetos e iniciativas que demonstram a aplicação prática das minhas
+          habilidades.
+        </p>
         <div class="portfolio-grid">
           <div class="portfolio-item">
-            <img alt="Projeto 1: Otimização de Processos Industriais" src="">
+            <img alt="Projeto 1: Otimização de Processos Industriais" src="" />
             <div class="item-overlay">
               <h4>Otimização de Processos Industriais</h4>
-              <p>Redução de 15% nos custos operacionais através da implementação de Lean Manufacturing.</p>
-              <router-link class="btn-view-project" to="/blog">Ver Detalhes</router-link>
+              <p>
+                Redução de 15% nos custos operacionais através da implementação
+                de Lean Manufacturing.
+              </p>
+              <router-link class="btn-view-project" to="/blog"
+                >Ver Detalhes</router-link
+              >
             </div>
           </div>
           <div class="portfolio-item">
-            <img alt="Projeto 2: Gestão de Ativos em Infraestrutura" src="">
+            <img alt="Projeto 2: Gestão de Ativos em Infraestrutura" src="" />
             <div class="item-overlay">
               <h4>Gestão de Ativos em Infraestrutura</h4>
-              <p>Desenvolvimento e implementação de um sistema de gestão de ativos para uma rede de estradas.</p>
-              <router-link class="btn-view-project" to="/blog">Ver Detalhes</router-link>
+              <p>
+                Desenvolvimento e implementação de um sistema de gestão de
+                ativos para uma rede de estradas.
+              </p>
+              <router-link class="btn-view-project" to="/blog"
+                >Ver Detalhes</router-link
+              >
             </div>
           </div>
           <div class="portfolio-item">
-            <img alt="Projeto 3: Análise de Risco em Construção" src="">
+            <img alt="Projeto 3: Análise de Risco em Construção" src="" />
             <div class="item-overlay">
               <h4>Análise de Risco em Construção</h4>
-              <p>Avaliação e mitigação de riscos em projetos de grande escala, garantindo segurança e conformidade.
+              <p>
+                Avaliação e mitigação de riscos em projetos de grande escala,
+                garantindo segurança e conformidade.
               </p>
-              <router-link class="btn-view-project" to="/blog">Ver Detalhes</router-link>
+              <router-link class="btn-view-project" to="/blog"
+                >Ver Detalhes</router-link
+              >
             </div>
           </div>
           <div class="portfolio-item">
-            <img alt="Projeto 4: Desenvolvimento de Ferramentas de Sustentabilidade"
-                 src="">
+            <img
+              alt="Projeto 4: Desenvolvimento de Ferramentas de Sustentabilidade"
+              src=""
+            />
             <div class="item-overlay">
               <h4>Ferramentas de Sustentabilidade</h4>
-              <p>Criação de modelos para avaliar o impacto ambiental e económico de novas tecnologias de construção.
+              <p>
+                Criação de modelos para avaliar o impacto ambiental e económico
+                de novas tecnologias de construção.
               </p>
-              <router-link class="btn-view-project" to="/blog">Ver Detalhes</router-link>
+              <router-link class="btn-view-project" to="/blog"
+                >Ver Detalhes</router-link
+              >
             </div>
           </div>
         </div>
         <div class="text-center mt-4">
-          <router-link class="btn-secondary-link" to="/blog">Ver Todos os Projetos</router-link>
+          <router-link class="btn-secondary-link" to="/blog"
+            >Ver Todos os Projetos</router-link
+          >
         </div>
       </div>
     </section>
@@ -137,8 +197,13 @@
     <section class="cta-section">
       <div class="container">
         <h2>Pronto para Otimizar Seus Processos?</h2>
-        <p>Vamos conversar sobre como minhas habilidades em engenharia e gestão podem transformar sua operação.</p>
-        <router-link class="btn-primary" to="/contact">Entrar em Contacto</router-link>
+        <p>
+          Vamos conversar sobre como minhas habilidades em engenharia e gestão
+          podem transformar sua operação.
+        </p>
+        <router-link class="btn-primary" to="/contact"
+          >Entrar em Contacto</router-link
+        >
       </div>
     </section>
 
@@ -147,22 +212,30 @@
         <h3>O Que Dizem Meus Clientes</h3>
         <div class="testimonials-grid">
           <div class="testimonial-card">
-            <p>"A expertise do Cesário em gestão de ativos foi crucial para a longevidade e eficiência da nossa
-              infraestrutura. Um profissional exemplar!"</p>
+            <p>
+              "A expertise do Cesário em gestão de ativos foi crucial para a
+              longevidade e eficiência da nossa infraestrutura. Um profissional
+              exemplar!"
+            </p>
             <div class="client-info">
               <span>João Silva, CEO - Construtora Alfa</span>
             </div>
           </div>
           <div class="testimonial-card">
-            <p>"A implementação das metodologias Lean Six Sigma propostas pelo Cesário resultou numa redução
-              significativa dos nossos custos operacionais."</p>
+            <p>
+              "A implementação das metodologias Lean Six Sigma propostas pelo
+              Cesário resultou numa redução significativa dos nossos custos
+              operacionais."
+            </p>
             <div class="client-info">
               <span>Maria Costa, Diretora de Operações - Indústria Beta</span>
             </div>
           </div>
           <div class="testimonial-card">
-            <p>"Sua abordagem meticulosa na análise de risco nos poupou de potenciais problemas em projetos
-              complexos. Recomendo fortemente!"</p>
+            <p>
+              "Sua abordagem meticulosa na análise de risco nos poupou de
+              potenciais problemas em projetos complexos. Recomendo fortemente!"
+            </p>
             <div class="client-info">
               <span>Pedro Fernandes, Gestor de Projetos - Grupo Gama</span>
             </div>
@@ -174,26 +247,47 @@
     <section id="contact" class="contact-section">
       <div class="container">
         <h3>Contacte-me</h3>
-        <p class="section-subtitle">Tenho todo o gosto em discutir as suas necessidades e como posso ajudar.</p>
+        <p class="section-subtitle">
+          Tenho todo o gosto em discutir as suas necessidades e como posso
+          ajudar.
+        </p>
         <div class="contact-methods">
           <div class="contact-card">
             <div class="icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" stroke-linecap="round"
-                      stroke-linejoin="round"/>
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <h4>Email</h4>
             <p>info@cesariomachava.com</p>
-            <a class="contact-link" href="mailto:info@cesariomachava.com">Enviar Email</a>
+            <a class="contact-link" href="mailto:info@cesariomachava.com"
+              >Enviar Email</a
+            >
           </div>
           <div class="contact-card">
             <div class="icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.355c0-.18-.03-.357-.087-.53l-2.088-6.19a2.25 2.25 0 00-1.282-1.282l-6.19-2.088a2.25 2.25 0 00-.53-.087H7.5a2.25 2.25 0 00-2.25 2.25v2.25M17.25 15.75h-.008v-.008H17.25z" stroke-linecap="round"
-                      stroke-linejoin="round"/>
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.355c0-.18-.03-.357-.087-.53l-2.088-6.19a2.25 2.25 0 00-1.282-1.282l-6.19-2.088a2.25 2.25 0 00-.53-.087H7.5a2.25 2.25 0 00-2.25 2.25v2.25M17.25 15.75h-.008v-.008H17.25z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <h4>Telefone</h4>
@@ -202,30 +296,42 @@
           </div>
           <div class="contact-card">
             <div class="icon">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-                <path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" stroke-linecap="round"
-                      stroke-linejoin="round"/>
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <h4>Localização</h4>
             <p>Maputo, Moçambique</p>
-            <a class="contact-link" href="https://maps.app.goo.gl/XXXXX" target="_blank">Ver no Mapa</a>
+            <a
+              class="contact-link"
+              href="https://maps.app.goo.gl/XXXXX"
+              target="_blank"
+              >Ver no Mapa</a
+            >
           </div>
         </div>
       </div>
     </section>
   </main>
-
 </template>
 
 <script setup>
-
-
-// Não há lógica específica de script para a HomeView além de importar os componentes
-// Os dados das seções são estáticos no template.
+import userInfo from "../../data/info.js";
 </script>
 
 <style scoped>
@@ -285,7 +391,7 @@ h3 {
 }
 
 h3::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -375,7 +481,7 @@ h3::after {
 }
 
 .btn-secondary-link::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;
@@ -388,7 +494,6 @@ h3::after {
 .btn-secondary-link:hover::after {
   width: 0;
 }
-
 
 /* Hero Section */
 .hero-section {
@@ -728,7 +833,6 @@ h3::after {
   font-size: 0.95rem;
 }
 
-
 /* Contact Section */
 .contact-section {
   background-color: var(--bg-section);
@@ -797,7 +901,7 @@ h3::after {
 }
 
 .contact-link::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;

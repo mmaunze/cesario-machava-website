@@ -1,0 +1,331 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.page-hero {
+  background: var(--gradient-primary);
+  color: white;
+  text-align: center;
+  padding: 80px 0 40px;
+  margin-top: 75px;
+  border-bottom: 5px solid var(--primary-green);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.page-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: white;
+  -webkit-text-fill-color: initial;
+}
+
+.page-hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Estilos específicos da página de detalhes do projeto */
+.project-hero {
+  background: var(
+    --primary-green
+  ); /* Talvez uma cor sólida ou gradiente diferente para a página de detalhes */
+  border-bottom: 5px solid var(--primary-blue);
+}
+
+.project-details-content-wrapper {
+  padding: 3rem 0;
+  background-color: var(--bg-body);
+}
+
+.project-details-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr; /* Conteúdo principal maior, sidebar menor */
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.project-main-content {
+  background: var(--bg-section);
+  border-radius: 15px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.project-image-gallery {
+  margin-bottom: 2.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.main-project-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.project-section {
+  margin-bottom: 2.5rem;
+}
+
+.project-section h2 {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.project-section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 70px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+.project-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.project-section ul {
+  list-style: none;
+  padding: 0;
+  margin-left: 1rem;
+}
+
+.project-section ul li {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.project-section ul li::before {
+  content: "✓"; /* Ícone de check */
+  color: var(--primary-green); /* Cor do ícone */
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.project-sidebar-info {
+  background: var(--bg-section);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  position: sticky;
+  top: 95px;
+}
+
+.sidebar-block {
+  margin-bottom: 2.5rem;
+}
+
+.sidebar-block h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.sidebar-block h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+.project-info-block ul {
+  list-style: none;
+  padding: 0;
+}
+
+.project-info-block ul li {
+  padding: 0.6rem 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.project-info-block ul li:last-child {
+  border-bottom: none;
+}
+
+.project-info-block ul li strong {
+  color: var(--text-primary);
+}
+
+.project-tags-block .tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.project-tags-block .tag-item {
+  background-color: var(
+    --primary-green
+  ); /* Cor diferente para tags na página de detalhes */
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: default; /* Não clicável na página de detalhes */
+  border: 1px solid transparent;
+}
+
+.btn-view-project {
+  background: var(--primary-blue); /* Cor para o botão de ver projeto */
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.btn-view-project:hover {
+  background: var(--secondary-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.back-link {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.btn-back {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 12px 25px;
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-back:hover {
+  background: var(--bg-hover);
+  color: var(--primary-green);
+  border-color: var(--primary-green);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.loading-or-error-message {
+  text-align: center;
+  padding: 100px 0;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 992px) {
+  .project-details-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .project-sidebar-info {
+    position: static;
+    margin-top: 0;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+  }
+
+  .project-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .project-section h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    padding: 60px 0 30px;
+  }
+
+  .page-hero h1 {
+    font-size: 2rem;
+  }
+
+  .project-details-content-wrapper {
+    padding: 2rem 0;
+  }
+
+  .project-main-content {
+    padding: 1.5rem;
+  }
+
+  .project-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .project-section p,
+  .project-section ul li {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .project-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .project-hero p {
+    font-size: 0.95rem;
+  }
+
+  .project-main-content {
+    padding: 1rem;
+  }
+
+  .btn-view-project,
+  .btn-back {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}

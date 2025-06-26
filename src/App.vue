@@ -1,55 +1,63 @@
 <template>
-  <Header/>
+  <Header />
   <div id="app-wrapper">
-    <router-view/>
+    <router-view />
 
     <button id="back-to-top" aria-label="Voltar ao topo">
-      <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.5 15.75l7.5-7.5 7.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4.5 15.75l7.5-7.5 7.5 7.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </button>
   </div>
-  <Footer/>
+  <Footer />
 </template>
 
 <script setup>
-
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
-import {onMounted, onUnmounted} from 'vue';
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import { onMounted, onUnmounted } from "vue";
 
 // Lógica do botão "Voltar ao topo" no JavaScript
 const handleScroll = () => {
-  const backToTopButton = document.getElementById('back-to-top');
+  const backToTopButton = document.getElementById("back-to-top");
   if (backToTopButton) {
     if (window.pageYOffset > 300) {
-      backToTopButton.classList.add('show');
+      backToTopButton.classList.add("show");
     } else {
-      backToTopButton.classList.remove('show');
+      backToTopButton.classList.remove("show");
     }
   }
 };
 
 const scrollToTop = () => {
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  const backToTopButton = document.getElementById('back-to-top');
+  window.addEventListener("scroll", handleScroll);
+  const backToTopButton = document.getElementById("back-to-top");
   if (backToTopButton) {
-    backToTopButton.addEventListener('click', scrollToTop);
+    backToTopButton.addEventListener("click", scrollToTop);
   }
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-  const backToTopButton = document.getElementById('back-to-top');
+  window.removeEventListener("scroll", handleScroll);
+  const backToTopButton = document.getElementById("back-to-top");
   if (backToTopButton) {
-    backToTopButton.removeEventListener('click', scrollToTop);
+    backToTopButton.removeEventListener("click", scrollToTop);
   }
 });
-
 </script>
 
 <style>
@@ -70,16 +78,37 @@ onUnmounted(() => {
   --accent-teal: #0d9488; /* Ciano/Verde Água (teal-600) */
 
   /* Cores para gradientes de texto/elementos */
-  --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-teal) 100%);
-  --gradient-secondary: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-  --gradient-accent: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
-  --gradient-text: linear-gradient(45deg, var(--primary-blue), var(--accent-teal));
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--accent-teal) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--primary-orange) 0%,
+    var(--secondary-orange) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--primary-green) 0%,
+    var(--secondary-green) 100%
+  );
+  --gradient-text: linear-gradient(
+    45deg,
+    var(--primary-blue),
+    var(--accent-teal)
+  );
 
   /* Cores de Fundo (Light Mode) */
   --bg-body: #f8fafc; /* Azul Claro Muito Suave (Slate-50) */
   --bg-section: #ffffff; /* Branco Puro */
   --bg-card: #f1f5f9; /* Cinza Azulado Claro (Slate-100) */
-  --bg-hero: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-teal) 50%, var(--primary-green) 100%);
+  --bg-hero: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--accent-teal) 50%,
+    var(--primary-green) 100%
+  );
 
   /* Cores de Texto (Light Mode) */
   --text-primary: #1e293b; /* Cinza Escuro (Slate-800) */
@@ -98,7 +127,12 @@ onUnmounted(() => {
   --bg-body: #0f172a; /* Azul Escuro Muito Profundo (Slate-900) */
   --bg-section: #1e293b; /* Azul Escuro (Slate-800) */
   --bg-card: #334155; /* Azul Médio Escuro (Slate-700) */
-  --bg-hero: linear-gradient(135deg, var(--secondary-blue) 0%, var(--accent-teal) 50%, var(--secondary-green) 100%);
+  --bg-hero: linear-gradient(
+    135deg,
+    var(--secondary-blue) 0%,
+    var(--accent-teal) 50%,
+    var(--secondary-green) 100%
+  );
 
   --text-primary: #f1f5f9; /* Branco Quase Puro (Slate-50) */
   --text-secondary: #cbd5e1; /* Cinza Azulado Claro (Slate-300) */
@@ -122,11 +156,13 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif; /* Uma fonte moderna e legível */
+  font-family: "Inter", sans-serif; /* Uma fonte moderna e legível */
   line-height: 1.6;
   color: var(--text-secondary);
   background-color: var(--bg-body);
-  transition: background-color 0.4s ease, color 0.4s ease; /* Transição suave para tema */
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease; /* Transição suave para tema */
   min-height: 100vh; /* Garante que o body ocupe a altura total da viewport */
   /*display: flex; Para flexbox do #app-wrapper */
   flex-direction: column; /* Para empilhar conteúdo e footer no final */
@@ -164,7 +200,8 @@ section {
   flex-grow: 1; /* Garante que as seções (as views) ocupem o espaço disponível */
 }
 
-section:nth-child(even) { /* Para alternar o background das secções */
+section:nth-child(even) {
+  /* Para alternar o background das secções */
   background: var(--bg-body);
 }
 
@@ -257,7 +294,9 @@ section:nth-child(even) { /* Para alternar o background das secções */
 .animated {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
 }
 
 .animated.visible {

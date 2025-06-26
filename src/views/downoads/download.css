@@ -1,0 +1,476 @@
+/*
+      IMPORTANTE: As variáveis CSS (--primary-blue, --bg-body, etc.)
+      já devem estar definidas no seu arquivo src/App.vue (estilos globais).
+      Este arquivo DownloadView.vue apenas referenciará essas variáveis.
+
+      A largura máxima de 2016px para o conteúdo principal deve ser gerenciada
+      no `App.vue` ou em um layout wrapper, não diretamente aqui para o container,
+      que deve ter max-width: 1200px para o conteúdo interno.
+    */
+
+/* Page Hero (comum para Downloads e Blog) */
+.page-hero {
+  background: var(--gradient-primary);
+  /* Use o gradiente primário ou um gradiente específico para esta página */
+  color: white;
+  text-align: center;
+  padding: 80px 0 40px;
+  margin-top: 75px;
+  /* Offset for fixed header */
+  border-bottom: 5px solid var(--primary-green);
+  /* Cor da borda inferior consistente */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  /* Sombra suave */
+}
+
+.page-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: white;
+  /* Garante que o texto do título seja branco */
+  -webkit-text-fill-color: initial;
+  /* Resetar para o branco padrão */
+}
+
+.page-hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Downloads Content Wrapper */
+.downloads-content-wrapper {
+  padding: 3rem 0;
+  background-color: var(--bg-body);
+}
+
+/* Layout da Seção de Downloads (Grid principal) */
+.downloads-layout {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  /* Sidebar para categorias e coluna principal para ficheiros */
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* Sidebar */
+.downloads-sidebar {
+  background: var(--bg-section);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  position: sticky;
+  /* Sticky sidebar */
+  top: 95px;
+  /* Offset da altura do header */
+}
+
+.sidebar-block {
+  margin-bottom: 2.5rem;
+}
+
+.sidebar-block h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.sidebar-block h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+/* Search Input */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  padding-right: 2.5rem;
+  /* Espaço para o ícone */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-input-wrapper svg {
+  position: absolute;
+  right: 15px;
+  color: var(--text-muted);
+  width: 20px;
+  height: 20px;
+}
+
+/* Filter Lists (Categories) */
+.filter-list {
+  list-style: none;
+  padding: 0;
+}
+
+.filter-list li {
+  padding: 0.8rem 0;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.filter-list li:last-child {
+  border-bottom: none;
+}
+
+.filter-list li:hover {
+  color: var(--primary-blue);
+}
+
+.filter-list li.active {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+.filter-list .count {
+  background-color: var(--bg-card);
+  padding: 0.2rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Tags Cloud */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tag-item {
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.tag-item:hover {
+  background: var(--gradient-primary);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tag-item.active {
+  background: var(--gradient-primary);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clear-filters {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--primary-orange);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.clear-filters:hover {
+  color: var(--secondary-orange);
+}
+
+/* Grid de Ficheiros */
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  min-height: 400px;
+}
+
+.file-card {
+  background: var(--bg-section);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 20px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.file-card.animated {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.file-card.animated.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.file-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px var(--shadow-hover);
+}
+
+.file-icon-container {
+  background: var(--primary-green);
+  /* Cor de fundo do ícone consistente com a página */
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.file-icon {
+  width: 60px;
+  height: 60px;
+  color: white;
+}
+
+.file-content {
+  padding: 1.8rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.file-content h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.file-content p {
+  margin-bottom: 1.2rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.file-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.file-meta span:not(:last-child)::after {
+  content: " • ";
+}
+
+.file-card .btn-download {
+  background: var(--gradient-primary);
+  /* Usando o gradiente principal */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  justify-content: center;
+  /* Centraliza o conteúdo do botão */
+}
+
+.file-card .btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-hover);
+}
+
+/* Placeholder para ficheiros não encontrados */
+.no-files-message {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: 15px;
+  margin-top: 3rem;
+  box-shadow: 0 5px 15px var(--shadow-color);
+  grid-column: 1 / -1;
+  /* Ocupa toda a largura do grid */
+}
+
+/* --- Estilos da Paginação --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3rem;
+  padding: 1rem;
+  background: var(--bg-section);
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.pagination-btn {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-width: 40px;
+  text-align: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--primary-green);
+  border-color: var(--primary-green);
+}
+
+.pagination-btn.active {
+  background: var(--primary-green);
+  color: white;
+  border-color: var(--primary-green);
+  font-weight: 700;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Container comum */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 992px) {
+  .downloads-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .downloads-sidebar {
+    position: static;
+    /* Remove sticky positioning on smaller screens */
+    margin-top: 0;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+  }
+
+  .page-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .files-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    /* Permite que os botões quebrem a linha */
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    padding: 60px 0 30px;
+  }
+
+  .page-hero h1 {
+    font-size: 2rem;
+  }
+
+  .downloads-content-wrapper {
+    padding: 2rem 0;
+  }
+
+  .files-grid {
+    gap: 1.5rem;
+  }
+
+  .file-card h4 {
+    font-size: 1.15rem;
+  }
+
+  .file-card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-block h3 {
+    font-size: 1.2rem;
+  }
+
+  .tag-item {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+  }
+}
