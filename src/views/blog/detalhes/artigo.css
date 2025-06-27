@@ -1,17 +1,16 @@
 .article-detail-main {
   background-color: var(--bg-body);
   padding: 3rem 0;
-  min-height: calc(100vh - 75px - 200px); /* Ajusta com base no header/footer */
-  margin-top: 75px; /* Offset for fixed header */
+  min-height: calc(100vh - 75px - 200px);
+  margin-top: 75px;
 }
 
 .article-container {
-  max-width: 1280px; /* Conteúdo do artigo um pouco mais estreito para melhor leitura */
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* Estilos do Artigo Principal */
 .blog-article-detail {
   background: var(--bg-section);
   border-radius: 15px;
@@ -49,11 +48,11 @@
 }
 
 .article-meta span {
-  white-space: nowrap; /* Evita quebra de linha para "•" */
+  white-space: nowrap;
 }
 
 .article-category {
-  color: var(--primary-green); /* Cor de destaque para a categoria */
+  color: var(--primary-green);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
@@ -79,7 +78,6 @@
   font-size: 1.05rem;
 }
 
-/* Estilos para o HTML injetado (fullContent) */
 .article-content h2,
 .article-content h3 {
   color: var(--primary-blue);
@@ -160,7 +158,6 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Seção de Artigos Relacionados */
 .related-articles-section {
   margin-top: 3rem;
   padding: 2.5rem;
@@ -197,20 +194,7 @@
   gap: 1.5rem;
 }
 
-.related-article-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-card);
-  border-radius: 10px;
-  overflow: hidden;
-  text-decoration: none;
-  color: var(--text-primary);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 15px var(--shadow-color);
-}
+
 
 .related-article-card:hover {
   transform: translateY(-5px);
@@ -283,7 +267,6 @@
   padding: 1rem 0;
 }
 
-/* No Article Found / Error Styles */
 .no-article-found {
   text-align: center;
   padding: 4rem 2rem;
@@ -328,7 +311,7 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  border: none; /* Add border: none for buttons */
+  border: none;
   cursor: pointer;
 }
 
@@ -344,13 +327,12 @@
   margin-right: 0.3rem;
 }
 
-/* New Loading Spinner Styles (shared with BlogView) */
 .loading-message {
   text-align: center;
   padding: 3rem 0;
   font-size: 1.2rem;
   color: var(--text-muted);
-  grid-column: 1 / -1; /* Ocupa toda a largura do grid */
+  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -442,7 +424,7 @@
   }
 
   .related-articles-grid {
-    grid-template-columns: 1fr; /* Uma coluna em mobile */
+    grid-template-columns: 1fr;
   }
 
   .related-article-image {
@@ -507,19 +489,16 @@
 .article-detail-main {
   background-color: var(--bg-body);
   padding: 3rem 0;
-  min-height: calc(
-    100vh - 75px - 200px
-  ); /* Ajustar com base no header/footer */
-  margin-top: 75px; /* Offset for fixed header */
+  min-height: calc(100vh - 75px - 200px);
+  margin-top: 75px;
 }
 
 .article-container {
-  max-width: 1280px; /* Conteúdo do artigo um pouco mais estreito para melhor leitura */
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* Estilos do Artigo Principal */
 .blog-article-detail {
   background: var(--bg-section);
   border-radius: 15px;
@@ -557,11 +536,11 @@
 }
 
 .article-meta span {
-  white-space: nowrap; /* Evita quebra de linha para "•" */
+  white-space: nowrap;
 }
 
 .article-category {
-  color: var(--primary-green); /* Cor de destaque para a categoria */
+  color: var(--primary-green);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
@@ -587,7 +566,6 @@
   font-size: 1.05rem;
 }
 
-/* Estilos para o HTML injetado (fullContent) */
 .article-content h2,
 .article-content h3 {
   color: var(--primary-blue);
@@ -632,7 +610,6 @@
   color: var(--text-primary);
 }
 
-/* Tags do Artigo */
 .article-tags {
   margin-top: 2rem;
   padding-top: 1.5rem;
@@ -753,7 +730,6 @@
   color: var(--text-muted);
 }
 
-/* Seção de Comentários (Simulada) */
 .comments-section {
   margin-top: 3rem;
   padding: 2.5rem;
@@ -794,7 +770,6 @@
   margin-top: 2rem;
 }
 
-/* Mensagem de Artigo Não Encontrado */
 .no-article-found {
   text-align: center;
   padding: 50px;
@@ -802,7 +777,7 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px var(--shadow-color);
   border: 1px solid var(--border-color);
-  margin: 5rem auto; /* Centraliza a mensagem */
+  margin: 5rem auto;
   max-width: 700px;
 }
 

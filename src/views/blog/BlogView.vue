@@ -1,3 +1,178 @@
+<script setup>
+import { computed, onMounted, ref, watch } from "vue";
+
+import api from "@/services/api";
+
+const allBlogPosts = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+const fetchPosts = async () => {
+  loading.value = true;
+  error.value = null;
+  try {
+    const response = await api.getAllPosts();
+
+    allBlogPosts.value = response.posts;
+  } catch (err) {
+    console.error("Erro ao buscar posts:", err);
+    error.value =
+      "Não foi possível carregar os posts. Por favor, tente novamente mais tarde.";
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchPosts();
+
+  watch(
+    paginatedPosts,
+    () => {
+      requestAnimationFrame(() => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              } else {
+                entry.target.classList.remove("visible");
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+          },
+        );
+
+        document.querySelectorAll(".blog-card.animated").forEach((card) => {
+          if (!card.classList.contains("visible")) {
+            observer.observe(card);
+          }
+        });
+      });
+    },
+    { immediate: true },
+  );
+});
+
+const searchQuery = ref("");
+const selectedCategory = ref(null);
+const selectedTags = ref([]);
+
+const filteredPosts = computed(() => {
+  let posts = allBlogPosts.value;
+
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    posts = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.author.toLowerCase().includes(query) ||
+        post.category.toLowerCase().includes(query) ||
+        (post.tags &&
+          Array.isArray(post.tags) &&
+          post.tags.some((tag) => tag.toLowerCase().includes(query))),
+    );
+  }
+
+  if (selectedCategory.value) {
+    posts = posts.filter((post) => post.category === selectedCategory.value);
+  }
+
+  if (selectedTags.value.length > 0) {
+    posts = posts.filter(
+      (post) =>
+        post.tags &&
+        Array.isArray(post.tags) &&
+        selectedTags.value.every((tag) => post.tags.includes(tag)),
+    );
+  }
+
+  return posts;
+});
+
+const uniqueCategories = computed(() => {
+  const categories = new Set();
+  allBlogPosts.value.forEach((post) => {
+    if (post.category) categories.add(post.category);
+  });
+  return Array.from(categories).sort();
+});
+
+const getCategoryCount = (category) => {
+  return allBlogPosts.value.filter((post) => post.category === category).length;
+};
+
+const allCategoriesCount = computed(() => allBlogPosts.value.length);
+
+const uniqueTags = computed(() => {
+  const tags = new Set();
+  allBlogPosts.value.forEach((post) => {
+    if (post.tags && Array.isArray(post.tags)) {
+      post.tags.forEach((tag) => tags.add(tag));
+    }
+  });
+  return Array.from(tags).sort();
+});
+
+const toggleTag = (tag) => {
+  const index = selectedTags.value.indexOf(tag);
+  if (index === -1) {
+    selectedTags.value.push(tag);
+  } else {
+    selectedTags.value.splice(index, 1);
+  }
+};
+
+const postsPerPage = 4;
+const currentPage = ref(1);
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredPosts.value.length / postsPerPage);
+});
+
+const paginatedPosts = computed(() => {
+  const start = (currentPage.value - 1) * postsPerPage;
+  const end = start + postsPerPage;
+  return filteredPosts.value.slice(start, end);
+});
+
+watch([searchQuery, selectedCategory, selectedTags], () => {
+  currentPage.value = 1;
+});
+
+const formatDate = (dateString) => {
+  if (!dateString) return "";
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString("pt-PT", options);
+};
+
+const calculateReadTime = (content) => {
+  if (!content) return 0;
+
+  const cleanContent = content.replace(/<\/?[^>]+(>|$)/g, "");
+  const wordsPerMinute = 200;
+  const wordCount = cleanContent.split(/\s+/).length;
+  return Math.ceil(wordCount / wordsPerMinute);
+};
+
+const getCategoryColor = (category) => {
+  const colors = {
+    "Gestão de Ativos": "var(--primary-blue)",
+    "Otimização de Processos": "var(--primary-orange)",
+    "Risco Operacional": "var(--primary-green)",
+    Sustentabilidade: "var(--accent-teal)",
+    Tecnologia: "var(--secondary-blue)",
+    Planeamento: "var(--secondary-orange)",
+    "Gestão de Projetos": "var(--primary-blue)",
+  };
+  return colors[category] || "var(--text-muted)";
+};
+</script>
+
 <template>
   <main>
     <section class="page-hero">
@@ -30,7 +205,7 @@
             >
               <img
                 :alt="post.title"
-                :src="post.imageUrl || '/src/assets/placeholder.jpg'"
+                :src="post.imageUrl || 'https://picsum.photos/200/300'"
                 class="blog-card-image"
               />
               <div class="blog-card-content">
@@ -199,199 +374,6 @@
     </section>
   </main>
 </template>
-
-<script setup>
-import { computed, onMounted, ref, watch } from "vue";
-
-import api from "@/services/api.js"; // Importa o serviço de API
-
-// Estado para os posts
-const allBlogPosts = ref([]); // Será preenchido pela API
-const loading = ref(true);
-const error = ref(null);
-
-// Função para buscar posts da API
-const fetchPosts = async () => {
-  loading.value = true;
-  error.value = null; // Limpa erros anteriores
-  try {
-    const response = await api.getAllPosts();
-    // Acessa a propriedade 'posts' da resposta da API
-    allBlogPosts.value = response.posts;
-  } catch (err) {
-    console.error("Erro ao buscar posts:", err);
-    error.value =
-      "Não foi possível carregar os posts. Por favor, tente novamente mais tarde.";
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Chama a função de busca ao montar o componente
-onMounted(() => {
-  fetchPosts();
-  // Inicializa o observer para animações após os dados serem carregados (ou como fallback)
-  // É melhor observar os elementos dinamicamente quando eles são renderizados
-  watch(
-    paginatedPosts,
-    () => {
-      // Certifica-se de que os cards estão no DOM antes de observá-los
-      requestAnimationFrame(() => {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                observer.unobserve(entry.target); // Deixa de observar depois de visível (opcional)
-              } else {
-                entry.target.classList.remove("visible");
-              }
-            });
-          },
-          {
-            threshold: 0.1,
-          },
-        );
-
-        document.querySelectorAll(".blog-card.animated").forEach((card) => {
-          // Evita observar o mesmo card várias vezes se já estiver visível
-          if (!card.classList.contains("visible")) {
-            observer.observe(card);
-          }
-        });
-      });
-    },
-    { immediate: true },
-  ); // Executa a observação inicial assim que paginatedPosts é populado
-});
-
-// --- FILTERS AND SEARCH ---
-const searchQuery = ref("");
-const selectedCategory = ref(null); // null means "All Categories"
-const selectedTags = ref([]);
-
-const filteredPosts = computed(() => {
-  let posts = allBlogPosts.value;
-
-  // Filter by search query
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    posts = posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        post.author.toLowerCase().includes(query) ||
-        post.category.toLowerCase().includes(query) ||
-        // Verifica se 'tags' existe e é um array antes de usar some()
-        (post.tags &&
-          Array.isArray(post.tags) &&
-          post.tags.some((tag) => tag.toLowerCase().includes(query))),
-    );
-  }
-
-  // Filter by category
-  if (selectedCategory.value) {
-    posts = posts.filter((post) => post.category === selectedCategory.value);
-  }
-
-  // Filter by tags (AND logic: post must have ALL selected tags)
-  if (selectedTags.value.length > 0) {
-    posts = posts.filter(
-      (post) =>
-        post.tags &&
-        Array.isArray(post.tags) &&
-        selectedTags.value.every((tag) => post.tags.includes(tag)),
-    );
-  }
-
-  return posts;
-});
-
-// --- CATEGORY AND TAGS COMPUTED PROPERTIES ---
-const uniqueCategories = computed(() => {
-  const categories = new Set();
-  allBlogPosts.value.forEach((post) => {
-    if (post.category) categories.add(post.category); // Adiciona apenas se houver categoria
-  });
-  return Array.from(categories).sort();
-});
-
-const getCategoryCount = (category) => {
-  return allBlogPosts.value.filter((post) => post.category === category).length;
-};
-
-const allCategoriesCount = computed(() => allBlogPosts.value.length);
-
-const uniqueTags = computed(() => {
-  const tags = new Set();
-  allBlogPosts.value.forEach((post) => {
-    // Verifica se 'tags' existe e é um array antes de iterar
-    if (post.tags && Array.isArray(post.tags)) {
-      post.tags.forEach((tag) => tags.add(tag));
-    }
-  });
-  return Array.from(tags).sort();
-});
-
-const toggleTag = (tag) => {
-  const index = selectedTags.value.indexOf(tag);
-  if (index === -1) {
-    selectedTags.value.push(tag);
-  } else {
-    selectedTags.value.splice(index, 1);
-  }
-};
-
-// --- PAGINATION ---
-const postsPerPage = 4;
-const currentPage = ref(1);
-
-const totalPages = computed(() => {
-  return Math.ceil(filteredPosts.value.length / postsPerPage);
-});
-
-const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * postsPerPage;
-  const end = start + postsPerPage;
-  return filteredPosts.value.slice(start, end);
-});
-
-// Reset page to 1 whenever filters change
-watch([searchQuery, selectedCategory, selectedTags], () => {
-  currentPage.value = 1;
-});
-
-// --- UTILITY FUNCTIONS ---
-const formatDate = (dateString) => {
-  if (!dateString) return "";
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(dateString).toLocaleDateString("pt-PT", options);
-};
-
-const calculateReadTime = (content) => {
-  if (!content) return 0;
-  // Regex para remover tags HTML
-  const cleanContent = content.replace(/<\/?[^>]+(>|$)/g, "");
-  const wordsPerMinute = 200; // Média de palavras por minuto
-  const wordCount = cleanContent.split(/\s+/).length;
-  return Math.ceil(wordCount / wordsPerMinute);
-};
-
-const getCategoryColor = (category) => {
-  // Mapeia categorias para cores para visualização
-  const colors = {
-    "Gestão de Ativos": "var(--primary-blue)",
-    "Otimização de Processos": "var(--primary-orange)",
-    "Risco Operacional": "var(--primary-green)",
-    Sustentabilidade: "var(--accent-teal)",
-    Tecnologia: "var(--secondary-blue)",
-    Planeamento: "var(--secondary-orange)",
-    "Gestão de Projetos": "var(--primary-blue)",
-    // Adicione mais mapeamentos conforme necessário para outras categorias
-  };
-  return colors[category] || "var(--text-muted)"; // Cor padrão se não mapeada
-};
-</script>
 
 <style scoped>
 @import "blog.css";

@@ -1,11 +1,11 @@
 .page-hero {
-  background: var(--gradient-primary); /* Gradiente principal */
+  background: var(--gradient-primary);
   color: white;
   text-align: center;
   padding: 80px 0 40px;
-  margin-top: 75px; /* Offset for fixed header */
-  border-bottom: 5px solid var(--primary-green); /* Cor da borda inferior consistente */
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  margin-top: 75px;
+  border-bottom: 5px solid var(--accent-teal);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .page-hero h1 {
@@ -24,29 +24,26 @@
   margin: 0 auto;
 }
 
-/* Portfolio Content Wrapper */
 .portfolio-content-wrapper {
   padding: 3rem 0;
   background-color: var(--bg-body);
 }
 
-/* Layout da Seção de Portfólio (Grid principal) */
 .portfolio-layout {
   display: grid;
-  grid-template-columns: 1fr 3fr; /* Sidebar para categorias e coluna principal para projetos */
+  grid-template-columns: 1fr 3fr;
   gap: 3rem;
   align-items: flex-start;
 }
 
-/* Sidebar */
 .portfolio-sidebar {
   background: var(--bg-section);
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 8px 20px var(--shadow-color);
   border: 1px solid var(--border-color);
-  position: sticky; /* Sticky sidebar */
-  top: 95px; /* Offset da altura do header */
+  position: sticky;
+  top: 95px;
 }
 
 .sidebar-block {
@@ -73,7 +70,6 @@
   border-radius: 2px;
 }
 
-/* Search Input */
 .search-input-wrapper {
   position: relative;
   display: flex;
@@ -82,8 +78,7 @@
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  padding-right: 2.5rem; /* Espaço para o ícone */
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--bg-body);
@@ -292,7 +287,7 @@
 }
 
 .project-card .btn-view-project {
-  background: var(--primary-green); /* Cor para o botão de portfólio */
+  background: var(--primary-green);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -325,10 +320,9 @@
   border-radius: 15px;
   margin-top: 3rem;
   box-shadow: 0 5px 15px var(--shadow-color);
-  grid-column: 1 / -1; /* Ocupa toda a largura do grid */
+  grid-column: 1 / -1;
 }
 
-/* --- Estilos da Paginação --- */
 .pagination {
   display: flex;
   justify-content: center;
@@ -356,7 +350,7 @@
 }
 
 .pagination-btn:hover:not(:disabled) {
-  background: var(--bg-hover);
+  background: var(--gradient-orange);
   color: var(--primary-green);
   border-color: var(--primary-green);
 }
@@ -373,14 +367,12 @@
   cursor: not-allowed;
 }
 
-/* Container comum */
 .container {
-  max-width: 1200px;
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 992px) {
   .portfolio-layout {
     grid-template-columns: 1fr;

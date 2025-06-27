@@ -1,3 +1,128 @@
+/* 1. VARIÁVEIS DE COR (Light Mode - Padrão) */
+:root {
+  --primary-blue: #2563eb; /* Azul Vibrante (indigo-600) */
+  --secondary-blue: #1e40af; /* Azul Escuro (indigo-800) */
+  --primary-orange: #f97316; /* Laranja Vibrante (orange-500) */
+  --secondary-orange: #ea580c; /* Laranja Escuro (orange-600) */
+  --primary-green: #16a34a; /* Verde Vibrante (green-600) */
+  --secondary-green: #15803d; /* Verde Escuro (green-800) */
+  --accent-teal: #0d9488; /* Ciano/Verde Água (teal-600) */
+
+  /* Cores para gradientes de texto/elementos */
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--accent-teal) 100%
+  );
+
+  --gradient-orange: linear-gradient(
+    145deg,
+    var(--primary-orange) 0%,
+    var(--primary-blue) 10%,
+    var(--accent-teal) 90%
+  );
+
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--primary-orange) 0%,
+    var(--secondary-orange) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--primary-green) 0%,
+    var(--secondary-green) 100%
+  );
+  --gradient-text: linear-gradient(
+    45deg,
+    var(--primary-blue),
+    var(--accent-teal)
+  );
+
+  /* Cores de Fundo (Light Mode) */
+  --bg-body: #f8fafc; /* Azul Claro Muito Suave (Slate-50) */
+  --bg-section: #ffffff; /* Branco Puro */
+  --bg-card: #f1f5f9; /* Cinza Azulado Claro (Slate-100) */
+  --bg-hero: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--accent-teal) 50%,
+    var(--primary-green) 100%
+  );
+
+  /* Cores de Texto (Light Mode) */
+  --text-primary: #1e293b; /* Cinza Escuro (Slate-800) */
+  --text-secondary: #475569; /* Cinza Médio (Slate-600) */
+  --text-muted: #64748b; /* Cinza Suave (Slate-500) */
+
+  /* Cores de Borda e Sombra (Light Mode) */
+  --border-color: #e2e8f0; /* Cinza Borda (Slate-200) */
+  --shadow-color: rgba(15, 23, 42, 0.08); /* Sombra suave para light mode */
+  --shadow-hover: rgba(15, 23, 42, 0.15); /* Sombra mais intensa no hover */
+}
+
+/* 2. VARIÁVEIS DE COR (Dark Mode) */
+/* A classe 'dark-mode' será adicionada ao <html> ou <body> pelo JavaScript do componente Header */
+.dark-mode {
+  --bg-body: #0f172a; /* Azul Escuro Muito Profundo (Slate-900) */
+  --bg-section: #1e293b; /* Azul Escuro (Slate-800) */
+  --bg-card: #334155; /* Azul Médio Escuro (Slate-700) */
+  --bg-hero: linear-gradient(
+    135deg,
+    var(--secondary-blue) 0%,
+    var(--accent-teal) 50%,
+    var(--secondary-green) 100%
+  );
+
+  --text-primary: #f1f5f9; /* Branco Quase Puro (Slate-50) */
+  --text-secondary: #cbd5e1; /* Cinza Azulado Claro (Slate-300) */
+  --text-muted: #94a3b8; /* Cinza Azulado Médio (Slate-400) */
+
+  --border-color: #475569; /* Cinza Azulado Forte (Slate-600) */
+  --shadow-color: rgba(0, 0, 0, 0.25); /* Sombra mais escura para dark mode */
+  --shadow-hover: rgba(0, 0, 0, 0.4); /* Sombra mais intensa no hover */
+}
+
+:root {
+  --primary-blue: #2563eb;
+  --secondary-blue: #1e40af;
+  --primary-orange: #f97316;
+  --secondary-orange: #ea580c;
+  --primary-green: #16a34a;
+  --secondary-green: #15803d;
+  --accent-teal: #0d9488;
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--accent-teal) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--primary-orange) 0%,
+    var(--secondary-orange) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--primary-green) 0%,
+    var(--secondary-green) 100%
+  );
+  --gradient-text: linear-gradient(
+    45deg,
+    var(--primary-blue),
+    var(--accent-teal)
+  );
+
+  /* Light Mode */
+  --bg-body: #f8fafc;
+  --bg-section: #ffffff;
+  --bg-card: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(15, 23, 42, 0.08);
+  --shadow-hover: rgba(15, 23, 42, 0.15);
+}
+
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;

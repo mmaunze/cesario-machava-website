@@ -1,14 +1,3 @@
-/*
-      IMPORTANTE: As variáveis CSS (--primary-blue, --bg-body, etc.)
-      já devem estar definidas no seu arquivo src/App.vue (estilos globais).
-      Este arquivo DownloadView.vue apenas referenciará essas variáveis.
-
-      A largura máxima de 2016px para o conteúdo principal deve ser gerenciada
-      no `App.vue` ou em um layout wrapper, não diretamente aqui para o container,
-      que deve ter max-width: 1200px para o conteúdo interno.
-    */
-
-/* Page Hero (comum para Downloads e Blog) */
 .page-hero {
   background: var(--gradient-primary);
   /* Use o gradiente primário ou um gradiente específico para esta página */
@@ -93,7 +82,6 @@
   border-radius: 2px;
 }
 
-/* Search Input */
 .search-input-wrapper {
   position: relative;
   display: flex;
@@ -102,9 +90,8 @@
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  padding-right: 2.5rem;
-  /* Espaço para o ícone */
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--bg-body);
@@ -388,7 +375,7 @@
 
 /* Container comum */
 .container {
-  max-width: 1200px;
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }

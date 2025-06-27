@@ -1,3 +1,83 @@
+<script setup>
+import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
+import axios from "axios";
+
+const route = useRoute();
+const project = ref(null);
+const loading = ref(true);
+const error = ref(null);
+
+const fetchProjectDetails = async (slug) => {
+  loading.value = true;
+  error.value = null;
+  project.value = null;
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/projects/${slug}`,
+    );
+    if (response.data && response.data.project) {
+      project.value = response.data.project;
+    } else {
+      error.value = "Dados do projeto inválidos.";
+    }
+  } catch (err) {
+    console.error("Erro ao buscar detalhes do projeto:", err);
+    error.value =
+      "Não foi possível carregar os detalhes do projeto. Tente novamente mais tarde.";
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchProjectDetails(route.params.slug);
+});
+
+watch(
+  () => route.params.slug,
+  (newSlug) => {
+    if (newSlug) {
+      fetchProjectDetails(newSlug);
+    }
+  },
+);
+
+const formatDate = (dateString) => {
+  if (!dateString) return "N/A";
+  try {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("pt-PT", options);
+  } catch (e) {
+    console.error("Erro ao formatar data:", e);
+    return dateString;
+  }
+};
+
+const formatStatus = (status) => {
+  switch (status) {
+    case "planning":
+      return "Em Planeamento";
+    case "in_progress":
+      return "Em Progresso";
+    case "completed":
+      return "Concluído";
+    case "cancelled":
+      return "Cancelado";
+    default:
+      return status;
+  }
+};
+
+const formatCurrency = (value) => {
+  if (value === null || value === undefined) return "N/A";
+  return new Intl.NumberFormat("pt-PT", {
+    style: "currency",
+    currency: "MZN",
+  }).format(value);
+};
+</script>
+
 <template>
   <main v-if="project">
     <section class="page-hero project-hero">
@@ -11,25 +91,23 @@
         <div class="project-main-content">
           <div class="project-image-gallery">
             <img
-                v-if="project.imageUrl"
-                :src="project.imageUrl"
-                :alt="project.title"
-                class="main-project-image"
+              v-if="project.imageUrl"
+              :src="project.imageUrl"
+              :alt="project.title"
+              class="main-project-image"
             />
             <div v-else class="no-image-placeholder">
               <img
-                  src="https://picsum.photos/200/300?grayscale"
-                  :alt="project.title"
-                  class="main-project-image"
+                src="https://picsum.photos/200/300"
+                :alt="project.title"
+                class="main-project-image"
               />
             </div>
           </div>
 
           <div class="project-section">
             <h2>Visão Geral do Projeto</h2>
-            <div
-                v-html="project.fullDescription || project.description"
-            ></div>
+            <div v-html="project.fullDescription || project.description"></div>
 
             <p v-if="project.challenges">
               <strong>Desafios:</strong> {{ project.challenges }}
@@ -56,24 +134,24 @@
           <div class="project-section" v-if="project.projectUrl">
             <h2>Ver o Projeto Online</h2>
             <a
-                :href="project.projectUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-view-project"
+              :href="project.projectUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-view-project"
             >
               Aceder ao Projeto
               <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  style="width: 20px; height: 20px; margin-left: 8px"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                style="width: 20px; height: 20px; margin-left: 8px"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                  d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
             </a>
@@ -82,17 +160,17 @@
           <div class="back-link">
             <router-link to="/portfolio" class="btn-back">
               <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="width: 20px; height: 20px; margin-right: 8px"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                style="width: 20px; height: 20px; margin-right: 8px"
               >
                 <path
-                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
               Voltar ao Portfólio
@@ -126,15 +204,15 @@
           </div>
 
           <div
-              class="sidebar-block project-tags-block"
-              v-if="project.technologies && project.technologies.length > 0"
+            class="sidebar-block project-tags-block"
+            v-if="project.technologies && project.technologies.length > 0"
           >
             <h3>Tecnologias/Tags</h3>
             <div class="tag-cloud">
               <span
-                  v-for="tag in project.technologies"
-                  :key="tag"
-                  class="tag-item"
+                v-for="tag in project.technologies"
+                :key="tag"
+                class="tag-item"
               >
                 {{ tag }}
               </span>
@@ -154,97 +232,12 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
-import axios from "axios"; // Importar axios para fazer requisições HTTP
-
-const route = useRoute();
-const project = ref(null);
-const loading = ref(true);
-const error = ref(null);
-
-const fetchProjectDetails = async (slug) => {
-  loading.value = true;
-  error.value = null;
-  project.value = null; // Limpa o projeto anterior
-  try {
-    // Ajuste a URL base da sua API conforme necessário
-    const response = await axios.get(`http://localhost:3000/api/projects/${slug}`);
-    if (response.data && response.data.project) {
-      project.value = response.data.project;
-    } else {
-      error.value = "Dados do projeto inválidos.";
-    }
-  } catch (err) {
-    console.error("Erro ao buscar detalhes do projeto:", err);
-    error.value = "Não foi possível carregar os detalhes do projeto. Tente novamente mais tarde.";
-  } finally {
-    loading.value = false;
-  }
-};
-
-onMounted(() => {
-  // Inicialmente, busca o projeto baseado no slug da rota
-  fetchProjectDetails(route.params.slug);
-});
-
-// Assista as mudanças no slug da rota para buscar novos dados quando a rota mudar
-watch(
-    () => route.params.slug,
-    (newSlug) => {
-      if (newSlug) {
-        fetchProjectDetails(newSlug);
-      }
-    }
-);
-
-// Função para formatar a data
-const formatDate = (dateString) => {
-  if (!dateString) return "N/A";
-  try {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString("pt-PT", options);
-  } catch (e) {
-    console.error("Erro ao formatar data:", e);
-    return dateString; // Retorna a string original se houver erro na formatação
-  }
-};
-
-// Função para formatar o status
-const formatStatus = (status) => {
-  switch (status) {
-    case "planning":
-      return "Em Planeamento";
-    case "in_progress":
-      return "Em Progresso";
-    case "completed":
-      return "Concluído";
-    case "cancelled":
-      return "Cancelado";
-    default:
-      return status;
-  }
-};
-
-// Função para formatar moeda (exemplo simples)
-const formatCurrency = (value) => {
-  if (value === null || value === undefined) return "N/A";
-  return new Intl.NumberFormat("pt-PT", {
-    style: "currency",
-    currency: "MZN", // Moeda de Moçambique
-  }).format(value);
-};
-</script>
-
 <style scoped>
-/* Importe seu arquivo CSS existente */
 @import "projecto.css";
 
-/* Estilos adicionais ou de fallback, se necessário */
 .no-image-placeholder {
   width: 100%;
-  height: 300px; /* Ou o tamanho que você preferir */
+  height: 300px;
   background-color: #f0f0f0;
   display: flex;
   align-items: center;

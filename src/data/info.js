@@ -1,5 +1,11 @@
+import icone1 from "@/assets/icones/servico1.svg";
+
 const userInfo = {
   nomeCompleto: "Cesário Machava",
+  endereco: "Bairo X, RUa X",
+  provincia: "Bairo X, RUa X",
+  telefone: "+258821345679",
+  email: "info@cesariomachava.com",
   cargo: "Engenheiro Civil | Gestão de Ativos | Otimização de Processos",
   objectivo:
     "Potenciando o seu negócio com soluções de engenharia inovadoras, gestão estratégica de ativos e melhoria contínua em Moçambique e além.",
@@ -16,6 +22,26 @@ const userInfo = {
       "Com uma sólida formação em Engenharia Civil e uma paixão inabalável pela eficiência e inovação,\n" +
       "              dedico-me a ajudar organizações a otimizar as suas operações e a maximizar o valor dos seus ativos.",
   },
+  servicos: [
+    {
+      id: 1,
+      nome: "",
+      descricao: "",
+      icone: icone1,
+    },
+    {
+      id: 2,
+      nome: "",
+      descricao: "",
+      icone: icone1,
+    },
+    {
+      id: 3,
+      nome: "",
+      descricao: "",
+      icone: icone1,
+    },
+  ],
 };
 
 export default userInfo;

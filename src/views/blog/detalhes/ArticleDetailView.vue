@@ -1,3 +1,80 @@
+<script setup>
+import { computed, onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+
+import api from "@/services/api.js";
+
+const route = useRoute();
+const article = ref(null);
+const allBlogPosts = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+const fetchArticleAndRelated = async () => {
+  loading.value = true;
+  error.value = null;
+  article.value = null;
+
+  const slug = route.params.slug;
+
+  try {
+    const articleResponse = await api.getPostBySlug(slug);
+
+    article.value = articleResponse.post;
+
+    const allPostsResponse = await api.getAllPosts();
+    allBlogPosts.value = allPostsResponse.posts;
+  } catch (err) {
+    console.error(`Erro ao buscar artigo com slug ${slug}:`, err);
+    error.value =
+      "Não foi possível carregar o artigo. Ele pode não existir ou houve um erro de rede.";
+  } finally {
+    loading.value = false;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
+const relatedArticles = computed(() => {
+  if (!article.value || allBlogPosts.value.length === 0) return [];
+
+  const otherArticles = allBlogPosts.value.filter(
+    (post) => post.id !== article.value.id,
+  );
+
+  let suggestions = otherArticles.filter(
+    (post) => post.category === article.value.category,
+  );
+
+  if (suggestions.length < 3) {
+    const remainingArticles = otherArticles.filter(
+      (post) => !suggestions.some((sugg) => sugg.id === post.id),
+    );
+
+    suggestions = [
+      ...suggestions,
+      ...remainingArticles.sort(
+        (a, b) => new Date(b.publishDate) - new Date(a.publishDate),
+      ),
+    ];
+  }
+
+  const uniqueSuggestions = Array.from(new Set(suggestions)).slice(0, 3);
+
+  return uniqueSuggestions.sort(
+    (a, b) => new Date(b.publishDate) - new Date(a.publishDate),
+  );
+});
+
+const formatDate = (dateString) => {
+  if (!dateString) return "";
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString("pt-PT", options);
+};
+
+onMounted(fetchArticleAndRelated);
+watch(() => route.params.slug, fetchArticleAndRelated);
+</script>
+
 <template>
   <main class="article-detail-main">
     <div class="container article-container">
@@ -136,96 +213,6 @@
     </div>
   </main>
 </template>
-
-<script setup>
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
-
-import api from "@/services/api.js";
-
-const route = useRoute();
-const article = ref(null);
-const allBlogPosts = ref([]);
-const loading = ref(true);
-const error = ref(null);
-
-// Função para buscar o artigo específico e todos os posts
-const fetchArticleAndRelated = async () => {
-  loading.value = true;
-  error.value = null;
-  article.value = null; // Limpa o artigo anterior
-
-  const slug = route.params.slug;
-
-  try {
-    // 1. Busca o artigo principal
-    const articleResponse = await api.getPostBySlug(slug);
-    // ACCESSE A PROPRIEDADE 'POST' AQUI!
-    article.value = articleResponse.post;
-
-    // 2. Busca todos os posts para a seção de "Artigos Relacionados"
-    // getAllPosts retorna um objeto com uma propriedade 'posts'
-    const allPostsResponse = await api.getAllPosts();
-    allBlogPosts.value = allPostsResponse.posts; // acessar .posts aqui também
-  } catch (err) {
-    console.error(`Erro ao buscar artigo com slug ${slug}:`, err);
-    error.value =
-      "Não foi possível carregar o artigo. Ele pode não existir ou houve um erro de rede.";
-  } finally {
-    loading.value = false;
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Rola para o topo ao carregar
-  }
-};
-
-// Computed property for related articles
-const relatedArticles = computed(() => {
-  if (!article.value || allBlogPosts.value.length === 0) return [];
-
-  // Filtra o artigo atual
-  const otherArticles = allBlogPosts.value.filter(
-    (post) => post.id !== article.value.id,
-  );
-
-  // Lógica simples: tenta pegar 3 artigos da mesma categoria, se não houver, pega os mais recentes
-  let suggestions = otherArticles.filter(
-    (post) => post.category === article.value.category,
-  );
-
-  // Se não encontrar 3 na mesma categoria, adiciona outros
-  if (suggestions.length < 3) {
-    // Filtra artigos que ainda não estão em 'suggestions'
-    const remainingArticles = otherArticles.filter(
-      (post) => !suggestions.some((sugg) => sugg.id === post.id),
-    );
-    // Adiciona os mais recentes dos restantes
-    suggestions = [
-      ...suggestions,
-      ...remainingArticles.sort(
-        (a, b) => new Date(b.publishDate) - new Date(a.publishDate),
-      ),
-    ];
-  }
-
-  // Remove duplicados (se houver) e limita a 3 artigos
-  const uniqueSuggestions = Array.from(new Set(suggestions)).slice(0, 3);
-
-  // Ordena por userInfo de publicação (mais recente primeiro) para garantir consistência
-  return uniqueSuggestions.sort(
-    (a, b) => new Date(b.publishDate) - new Date(a.publishDate),
-  );
-});
-
-// Function to format date
-const formatDate = (dateString) => {
-  if (!dateString) return "";
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(dateString).toLocaleDateString("pt-PT", options);
-};
-
-// Fetch article on component mount and when route changes
-onMounted(fetchArticleAndRelated);
-watch(() => route.params.slug, fetchArticleAndRelated);
-</script>
 
 <style scoped>
 @import "artigo.css";

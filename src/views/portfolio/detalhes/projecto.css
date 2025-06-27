@@ -1,5 +1,5 @@
 .container {
-  max-width: 1200px;
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -9,8 +9,8 @@
   color: white;
   text-align: center;
   padding: 80px 0 40px;
-  margin-top: 75px;
-  border-bottom: 5px solid var(--primary-green);
+  margin-top: 35px;
+  border-bottom: 5px solid var(--accent-teal);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -30,11 +30,8 @@
   margin: 0 auto;
 }
 
-/* Estilos específicos da página de detalhes do projeto */
 .project-hero {
-  background: var(
-    --primary-green
-  ); /* Talvez uma cor sólida ou gradiente diferente para a página de detalhes */
+  background: var(--primary-green);
   border-bottom: 5px solid var(--primary-blue);
 }
 
@@ -45,7 +42,7 @@
 
 .project-details-layout {
   display: grid;
-  grid-template-columns: 3fr 1fr; /* Conteúdo principal maior, sidebar menor */
+  grid-template-columns: 3fr 1fr;
   gap: 3rem;
   align-items: flex-start;
 }
@@ -186,19 +183,17 @@
 }
 
 .project-tags-block .tag-item {
-  background-color: var(
-    --primary-green
-  ); /* Cor diferente para tags na página de detalhes */
+  background-color: var(--primary-green);
   color: white;
   padding: 0.6rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
-  cursor: default; /* Não clicável na página de detalhes */
+  cursor: default;
   border: 1px solid transparent;
 }
 
 .btn-view-project {
-  background: var(--primary-blue); /* Cor para o botão de ver projeto */
+  background: var(--primary-blue);
   color: white;
   padding: 12px 25px;
   border: none;
@@ -240,7 +235,7 @@
 }
 
 .btn-back:hover {
-  background: var(--bg-hover);
+  background: var(--gradient-orange);
   color: var(--primary-green);
   border-color: var(--primary-green);
   transform: translateY(-2px);

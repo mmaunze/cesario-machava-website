@@ -1,60 +1,11 @@
-/* Novos estilos para loading e erro */
-.loading-message,
-.error-message {
-  text-align: center;
-  padding: 3rem 0;
-  font-size: 1.2rem;
-  color: var(--text-muted);
-  grid-column: 1 / -1; /* Ocupa toda a largura do grid */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.spinner {
-  border: 4px solid var(--border-color);
-  border-top: 4px solid var(--primary-blue);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.btn-retry {
-  background: var(--primary-blue);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.btn-retry:hover {
-  background: var(--secondary-blue);
-}
-
 .page-hero {
-  background: var(
-    --gradient-accent
-  ); /* Usando um gradiente verde para downloads */
+  background: var(--gradient-orange);
   color: white;
   text-align: center;
   padding: 80px 0 40px;
-  margin-top: 75px; /* Offset for fixed header */
-  border-bottom: 5px solid var(--primary-green);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  margin-top: 75px;
+  border-bottom: 5px solid var(--primary-blue);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .page-hero h1 {
@@ -63,9 +14,8 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   color: white;
-  /* Corrigir para branco, já que o gradiente de texto não se aplica bem aqui */
+
   -webkit-text-fill-color: initial;
-  /* Resetar para o branco padrão */
 }
 
 .page-hero p {
@@ -75,7 +25,6 @@
   margin: 0 auto;
 }
 
-/* Blog List Section - Nova Estrutura */
 .blog-content-wrapper {
   padding: 3rem 0;
   background-color: var(--bg-body);
@@ -83,9 +32,9 @@
 
 .blog-layout {
   display: grid;
-  grid-template-columns: 3fr 1fr; /* Main content (3 partes) e Sidebar (1 parte) */
+  grid-template-columns: 3fr 1fr;
   gap: 3rem;
-  align-items: flex-start; /* Alinha o conteúdo ao topo */
+  align-items: flex-start;
 }
 
 .blog-main {
@@ -135,7 +84,7 @@
 .blog-card-image {
   width: 100%;
   height: 220px;
-  /* Aumentei a altura da imagem para melhor impacto visual */
+
   object-fit: cover;
   display: block;
 }
@@ -151,7 +100,7 @@
 .blog-category {
   display: inline-block;
   background-color: var(--primary-orange);
-  /* Cor padrão, será sobrescrita por JS */
+
   color: white;
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
@@ -220,7 +169,7 @@
   font-size: 1.2rem;
   color: var(--text-muted);
   padding: 3rem 0;
-  grid-column: 1 / -1; /* Ocupa toda a largura do grid */
+  grid-column: 1 / -1;
 }
 
 /* Pagination */
@@ -311,8 +260,8 @@
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  padding-right: 2.5rem; /* Espaço para o ícone */
+
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--bg-body);
@@ -421,10 +370,8 @@
   color: var(--secondary-orange);
 }
 
-/* Dark Mode Overrides for specific elements (if needed, but App.vue handles most) */
 .dark-mode .blog-card-image[src*="placeholder"] {
-  /* Ajustar imagens placeholder para dark mode, se elas tiverem fundo claro */
-  filter: brightness(0.8) contrast(1.2); /* Exemplo de filtro */
+  filter: brightness(0.8) contrast(1.2);
 }
 
 /* Responsividade */
@@ -434,11 +381,11 @@
   }
 
   .blog-layout {
-    grid-template-columns: 1fr; /* Coluna única em tablets */
+    grid-template-columns: 1fr;
   }
 
   .blog-sidebar {
-    position: static; /* Remove sticky positioning on smaller screens */
+    position: static;
     margin-top: 2rem;
   }
 
@@ -461,7 +408,7 @@
   }
 
   .blog-grid {
-    grid-template-columns: 1fr; /* Uma coluna em mobile */
+    grid-template-columns: 1fr;
   }
 
   .blog-card-content h3 {

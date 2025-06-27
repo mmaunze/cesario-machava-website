@@ -1,3 +1,9 @@
+<script setup>
+import { ref } from "vue";
+
+const currentYear = ref(new Date().getFullYear());
+</script>
+
 <template>
   <footer class="minimal-footer">
     <div class="container footer-container">
@@ -57,41 +63,33 @@
   </footer>
 </template>
 
-<script setup>
-import { ref } from "vue";
-
-const currentYear = ref(new Date().getFullYear());
-</script>
-
 <style scoped>
-/* Footer Minimalista */
 .minimal-footer {
   background: var(--bg-section);
-  /* Fundo sutil, ou um cinza escuro para contraste */
+
   color: var(--text-secondary);
   padding: 2rem 0;
-  /* Padding reduzido */
+
   border-top: 1px solid var(--border-color);
-  /* Linha sutil no topo */
+
   font-size: 0.9rem;
 }
 
-/* Ajustes para Dark Mode */
 .dark-mode .minimal-footer {
   background: var(--bg-card-dark);
-  /* Fundo mais escuro para dark mode */
+
   border-top-color: var(--border-color-dark);
 }
 
 .footer-container {
   display: flex;
   justify-content: space-between;
-  /* Alinha conteúdo à esquerda e direita */
+
   align-items: center;
   flex-wrap: wrap;
-  /* Permite quebrar linha em telas pequenas */
+
   gap: 1.5rem;
-  max-width: 1200px;
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -100,14 +98,12 @@ const currentYear = ref(new Date().getFullYear());
 .footer-right {
   display: flex;
   flex-direction: column;
-  /* Empilha os elementos verticalmente */
+
   align-items: flex-start;
-  /* Alinha o texto à esquerda */
 }
 
 .footer-right {
   align-items: flex-end;
-  /* Alinha os ícones sociais à direita */
 }
 
 .copyright-text {
@@ -119,7 +115,6 @@ const currentYear = ref(new Date().getFullYear());
   font-size: 1rem;
   font-weight: 500;
   color: var(--primary-blue);
-  /* Cor de destaque para a tagline */
 }
 
 .social-links {
@@ -129,16 +124,16 @@ const currentYear = ref(new Date().getFullYear());
 
 .social-links a {
   width: 38px;
-  /* Tamanho um pouco menor para os ícones */
+
   height: 38px;
   border-radius: 50%;
-  /* Formato circular */
+
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   background-color: var(--primary-blue);
-  /* Cor sólida para o fundo do ícone */
+
   transition:
     background-color 0.3s ease,
     transform 0.3s ease,
@@ -148,7 +143,7 @@ const currentYear = ref(new Date().getFullYear());
 
 .social-links a:hover {
   background-color: var(--primary-orange);
-  /* Mudança de cor no hover */
+
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -162,16 +157,14 @@ const currentYear = ref(new Date().getFullYear());
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
-    /* Empilha os elementos em telas menores */
+
     text-align: center;
     align-items: center;
-    /* Centraliza os itens */
   }
 
   .footer-left,
   .footer-right {
     align-items: center;
-    /* Centraliza o conteúdo dentro de cada bloco */
   }
 
   .copyright-text,

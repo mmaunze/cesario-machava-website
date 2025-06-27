@@ -78,7 +78,6 @@ const toggleTheme = (event) => {
 };
 
 onMounted(() => {
-  // Lógica para carregar o tema salvo ou preferência do sistema
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark-mode") {
     isDarkMode.value = true;
@@ -97,7 +96,6 @@ onMounted(() => {
     document.body.classList.add("dark-mode");
   }
 
-  // Fechar menu mobile ao navegar (observa mudanças de rota)
   router.afterEach(() => {
     isMobileMenuOpen.value = false;
   });
@@ -105,49 +103,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 1. VARIÁVEIS DE COR (se você não tiver no App.vue) - Recomendado ter no App.vue ou main.css */
-/* Se este CSS for o único lugar para essas variáveis, remova `scoped` deste bloco e mova-o para um arquivo CSS global. */
-:root {
-  --primary-blue: #2563eb;
-  --secondary-blue: #1e40af;
-  --primary-orange: #f97316;
-  --secondary-orange: #ea580c;
-  --primary-green: #16a34a;
-  --secondary-green: #15803d;
-  --accent-teal: #0d9488;
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--primary-blue) 0%,
-    var(--accent-teal) 100%
-  );
-  --gradient-secondary: linear-gradient(
-    135deg,
-    var(--primary-orange) 0%,
-    var(--secondary-orange) 100%
-  );
-  --gradient-accent: linear-gradient(
-    135deg,
-    var(--primary-green) 0%,
-    var(--secondary-green) 100%
-  );
-  --gradient-text: linear-gradient(
-    45deg,
-    var(--primary-blue),
-    var(--accent-teal)
-  );
-
-  /* Light Mode */
-  --bg-body: #f8fafc;
-  --bg-section: #ffffff;
-  --bg-card: #f1f5f9;
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --shadow-color: rgba(15, 23, 42, 0.08);
-  --shadow-hover: rgba(15, 23, 42, 0.15);
-}
-
 /* Header */
 header {
   background: rgba(255, 255, 255, 0.95);

@@ -1,70 +1,10 @@
-<template>
-  <main class="not-found-main">
-    <div class="container not-found-content">
-      <div class="not-found-icon">
-        <svg
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 9v3.75m-9.303 3.376c-.866 1.5.174 3.35 1.94 3.35h14.72c1.766 0 2.806-1.85 1.94-3.35L13.153 1.291a1.125 1.125 0 00-2.306 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </div>
-      <h1>404</h1>
-      <h2>Página Não Encontrada</h2>
-      <p>
-        Lamentamos, mas a página que procura pode ter sido movida, excluída ou
-        nunca existiu.
-      </p>
-      <router-link class="btn-home" to="/">
-        <svg
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          style="width: 20px; height: 20px"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125h9.75a1.125 1.125 0 001.125-1.125V13.5m-3.75 4.5H12M12 18.75v-7.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        Voltar à Página Inicial
-      </router-link>
-    </div>
-  </main>
-</template>
-
-<script setup>
-import { onMounted } from "vue";
-
-onMounted(() => {
-  // Simple fade-in effect for the content
-  const content = document.querySelector(".not-found-content");
-  if (content) {
-    setTimeout(() => {
-      content.classList.add("fade-in");
-    }, 100); // Small delay to ensure CSS applies
-  }
-});
-</script>
-
-<style scoped>
 .not-found-main {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Garante que o conteúdo ocupe o espaço restante para centralizar */
+
   min-height: calc(100vh - 75px - 200px);
-  /* Altura total da viewport - altura aproximada do header - altura aproximada do footer */
+
   text-align: center;
   padding: 4rem 0;
   background-color: var(--bg-body);
@@ -72,13 +12,13 @@ onMounted(() => {
 }
 
 .not-found-content {
-  max-width: 650px;
+  max-width: 950px;
   background: var(--bg-section);
   padding: 4rem;
   border-radius: 20px;
   box-shadow: 0 15px 40px var(--shadow-color);
   border: 1px solid var(--border-color);
-  transition: all 0.5s ease-out; /* Para a animação de fade-in */
+  transition: all 0.5s ease-out;
   opacity: 0;
   transform: translateY(20px);
 }
@@ -105,7 +45,7 @@ onMounted(() => {
   font-size: 7rem;
   font-weight: 900;
   color: var(--primary-orange);
-  /* Mantém o 404 em laranja */
+
   margin-bottom: 0.5rem;
   line-height: 1;
   text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
@@ -115,7 +55,7 @@ onMounted(() => {
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--primary-blue);
-  /* Título secundário em azul */
+
   margin-bottom: 1.5rem;
 }
 
@@ -131,10 +71,10 @@ onMounted(() => {
 
 .btn-home {
   display: inline-flex;
-  /* Para alinhar o ícone e o texto */
+
   align-items: center;
   gap: 0.75rem;
-  /* Espaçamento entre ícone e texto */
+
   background: var(--gradient-primary);
   color: white;
   padding: 14px 30px;
@@ -214,4 +154,3 @@ onMounted(() => {
     font-size: 0.95rem;
   }
 }
-</style>
