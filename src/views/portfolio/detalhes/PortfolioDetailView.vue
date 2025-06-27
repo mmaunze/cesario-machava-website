@@ -7,15 +7,16 @@ const route = useRoute();
 const project = ref(null);
 const loading = ref(true);
 const error = ref(null);
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://personal-portfolio-website-api.onrender.com/api";
 
 const fetchProjectDetails = async (slug) => {
   loading.value = true;
   error.value = null;
   project.value = null;
   try {
-    const response = await axios.get(
-      `http://localhost:3000/api/projects/${slug}`,
-    );
+    const response = await axios.get(`${API_BASE_URL}/projects/${slug}`);
     if (response.data && response.data.project) {
       project.value = response.data.project;
     } else {
@@ -223,7 +224,10 @@ const formatCurrency = (value) => {
     </section>
   </main>
   <div v-else class="loading-or-error-message container">
-    <p v-if="loading">Carregando detalhes do projeto...</p>
+    <div v-if="loading" class="loading-message">
+      <p>Carregando Projeto...</p>
+      <div class="spinner"></div>
+    </div>
     <p v-else-if="error">{{ error }}</p>
     <p v-else>Projeto não encontrado.</p>
     <router-link to="/portfolio" class="btn-back">

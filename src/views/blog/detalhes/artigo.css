@@ -194,8 +194,6 @@
   gap: 1.5rem;
 }
 
-
-
 .related-article-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px var(--shadow-hover);
