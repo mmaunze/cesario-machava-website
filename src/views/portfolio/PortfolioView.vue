@@ -2,9 +2,9 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <h1>Nosso Portfólio</h1>
+        <h1>Meu Portfólio</h1>
         <p>
-          Explore nossos projetos concluídos e veja a qualidade do nosso
+          Explore meus projetos concluídos e veja a qualidade do meu
           trabalho em engenharia civil, gestão e inovação.
         </p>
       </div>
@@ -83,7 +83,17 @@
         </aside>
 
         <div class="portfolio-main">
-          <div v-if="paginatedProjects.length > 0" class="projects-grid">
+          <div v-if="loading" class="loading-message">
+            <p>Carregando projetos...</p>
+            <div class="spinner"></div>
+          </div>
+          <div v-else-if="error" class="error-message">
+            <p>{{ error }}</p>
+            <button class="btn-retry" @click="fetchProjects">
+              Tentar Novamente
+            </button>
+          </div>
+          <div v-else-if="paginatedProjects.length > 0" class="projects-grid">
             <div
                 v-for="project in paginatedProjects"
                 :key="project.id"
@@ -91,14 +101,13 @@
             >
               <div class="project-image-container">
                 <img
-                    :src="project.image"
-                    :alt="project.name"
+                    src="https://picsum.photos/200/300"
+                    :alt="project.title"
                     class="project-image"
                 />
               </div>
               <div class="project-content">
-                <h4>{{ project.name }}</h4>
-                <p>{{ project.description }}</p>
+                <h4>{{ project.title }}</h4>
                 <div class="project-meta">
                   <span>{{ project.category }}</span>
                   <span
@@ -107,7 +116,7 @@
                   >
                 </div>
                 <router-link
-                    :to="{ name: 'PortfolioDetail', params: { slug: project.id } }"
+                    :to="{ name: 'PortfolioDetail', params: { slug: project.slug } }"
                     class="btn-view-project"
                 >
                   Ver Projeto
@@ -178,99 +187,12 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
+import api from "@/services/api.js"; // Importa o serviço de API
 
 // --- Estado Reativo ---
-const allPortfolioProjects = ref([
-  {
-    id: 101,
-    name: "Construção do Edifício Corporativo Blue Sky",
-    description:
-        "Projeto de construção de um moderno edifício de escritórios com foco em sustentabilidade e eficiência energética.",
-    category: "Edificações",
-    tags: [
-      "corporativo",
-      "sustentabilidade",
-      "construção",
-      "eficiência energética",
-    ],
-    image:
-        "https://via.placeholder.com/400x250/4B84CB/FFFFFF?text=EdificioBlueSky", // Exemplo de imagem
-    completionDate: "2024-11-20",
-    projectLink: "https://example.com/project/bluesky", // Link para a página do projeto
-  },
-  {
-    id: 102,
-    name: "Otimização de Redes de Saneamento Urbano",
-    description:
-        "Estudo e implementação de soluções para aprimorar a infraestrutura de saneamento em áreas urbanas densas.",
-    category: "Infraestrutura",
-    tags: ["saneamento", "urbano", "infraestrutura", "engenharia hídrica"],
-    image:
-        "https://via.placeholder.com/400x250/33A02C/FFFFFF?text=SaneamentoUrbano",
-    completionDate: "2023-08-15",
-    projectLink: "https://example.com/project/saneamento",
-  },
-  {
-    id: 103,
-    name: "Reabilitação da Ponte Histórica Rio Claro",
-    description:
-        "Projeto de engenharia de recuperação estrutural e restauro estético de uma ponte centenária.",
-    category: "Restauro",
-    tags: ["pontes", "restauro", "engenharia estrutural", "histórico"],
-    image:
-        "https://via.placeholder.com/400x250/C1573A/FFFFFF?text=PonteRioClaro",
-    completionDate: "2024-03-10",
-    projectLink: "https://example.com/project/rioclaro",
-  },
-  {
-    id: 104,
-    name: "Plano Diretor de Desenvolvimento Urbano Sustentável",
-    description:
-        "Elaboração de um plano estratégico para o crescimento urbano com princípios de sustentabilidade e resiliência.",
-    category: "Planejamento Urbano",
-    tags: ["planejamento", "urbano", "sustentabilidade", "resiliência"],
-    image:
-        "https://via.placeholder.com/400x250/6A3D9A/FFFFFF?text=PlanoDiretor",
-    completionDate: "2025-01-25",
-    projectLink: "https://example.com/project/planodiretor",
-  },
-  {
-    id: 105,
-    name: "Gestão de Resíduos em Grande Escala Industrial",
-    description:
-        "Consultoria e implementação de sistemas de gestão de resíduos sólidos para complexos industriais.",
-    category: "Gestão Ambiental",
-    tags: ["resíduos", "industrial", "gestão ambiental", "sustentabilidade"],
-    image:
-        "https://via.placeholder.com/400x250/FF7F00/FFFFFF?text=ResiduosIndustriais",
-    completionDate: "2024-07-01",
-    projectLink: "https://example.com/project/residuos",
-  },
-  {
-    id: 106,
-    name: "Automação e Otimização de Canteiros de Obra",
-    description:
-        "Implementação de tecnologias de automação e IoT para aumentar a eficiência e segurança em canteiros de obra.",
-    category: "Inovação",
-    tags: ["automação", "IoT", "canteiro de obra", "inovação", "eficiência"],
-    image:
-        "https://via.placeholder.com/400x250/1F78B4/FFFFFF?text=AutomacaoCanteiro",
-    completionDate: "2023-11-30",
-    projectLink: "https://example.com/project/automacao",
-  },
-  {
-    id: 107,
-    name: "Projeto de Parque Urbano Verde Vivo",
-    description:
-        "Criação de um novo espaço público com foco em áreas verdes, lazer e infraestrutura sustentável.",
-    category: "Paisagismo Urbano",
-    tags: ["paisagismo", "parque", "urbano", "lazer", "espaços públicos"],
-    image:
-        "https://via.placeholder.com/400x250/B2DF8A/333333?text=ParqueVerdeVivo",
-    completionDate: "2024-09-05",
-    projectLink: "https://example.com/project/parquevivo",
-  },
-]);
+const allPortfolioProjects = ref([]); // Será preenchido pela API
+const loading = ref(true);
+const error = ref(null);
 
 const searchQuery = ref("");
 const selectedCategory = ref(null); // null means "All Categories"
@@ -278,6 +200,69 @@ const selectedTags = ref([]); // Array para tags selecionadas
 
 const currentPage = ref(1);
 const projectsPerPage = ref(6); // Mantido em 6 itens por página
+
+// Função para buscar projetos da API
+const fetchProjects = async () => {
+  loading.value = true;
+  error.value = null; // Limpa erros anteriores
+  try {
+    const response = await api.getAllProjects(); // Assumindo que existe um método getAllProjects na sua API
+    // Acessa a propriedade 'projects' da resposta da API
+    allPortfolioProjects.value = response.projects.map(project => ({
+      ...project,
+      // Ajusta as propriedades para corresponder ao formato esperado pelo componente
+      name: project.title, // Mapeia 'title' para 'name'
+      description: project.description.replace(/<\/?[^>]+(>|$)/g, ''), // Remove HTML da descrição
+      completionDate: project.endDate || project.createdAt, // Usa endDate se existir, senão createdAt
+      // Assumindo que as tags virão em um array de strings ou precisam ser extraídas de 'technologies'
+      tags: project.technologies && Array.isArray(project.technologies) ? project.technologies.map(tech => tech.name || tech) : [],
+    }));
+  } catch (err) {
+    console.error("Erro ao buscar projetos:", err);
+    error.value =
+        "Não foi possível carregar os projetos. Por favor, tente novamente mais tarde.";
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Chama a função de busca ao montar o componente
+onMounted(() => {
+  fetchProjects();
+  // Inicializa o observer para animações após os dados serem carregados (ou como fallback)
+  // É melhor observar os elementos dinamicamente quando eles são renderizados
+  watch(
+      paginatedProjects,
+      () => {
+        // Certifica-se de que os cards estão no DOM antes de observá-los
+        requestAnimationFrame(() => {
+          const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target); // Deixa de observar depois de visível (opcional)
+                  } else {
+                    entry.target.classList.remove("visible");
+                  }
+                });
+              },
+              {
+                threshold: 0.1,
+              },
+          );
+
+          document.querySelectorAll(".project-card.animated").forEach((card) => {
+            // Evita observar o mesmo card várias vezes se já estiver visível
+            if (!card.classList.contains("visible")) {
+              observer.observe(card);
+            }
+          });
+        });
+      },
+      { immediate: true },
+  ); // Executa a observação inicial assim que paginatedProjects é populado
+});
 
 // --- Computed Properties ---
 
@@ -293,7 +278,7 @@ const filteredProjects = computed(() => {
             project.name.toLowerCase().includes(query) ||
             project.description.toLowerCase().includes(query) ||
             project.category.toLowerCase().includes(query) ||
-            project.tags.some((tag) => tag.toLowerCase().includes(query)),
+            (project.tags && Array.isArray(project.tags) && project.tags.some((tag) => tag.toLowerCase().includes(query))),
     );
   }
 
@@ -307,7 +292,7 @@ const filteredProjects = computed(() => {
   // Filtrar por tags (lógica AND: o projeto deve ter TODAS as tags selecionadas)
   if (selectedTags.value.length > 0) {
     projects = projects.filter((project) =>
-        selectedTags.value.every((tag) => project.tags.includes(tag)),
+        project.tags && Array.isArray(project.tags) && selectedTags.value.every((tag) => project.tags.includes(tag)),
     );
   }
 
@@ -329,9 +314,9 @@ const totalPages = computed(() => {
 // Lista de categorias dinamicamente gerada com contagens
 const uniqueCategories = computed(() => {
   const categories = new Set();
-  allPortfolioProjects.value.forEach((project) =>
-      categories.add(project.category),
-  );
+  allPortfolioProjects.value.forEach((project) => {
+    if (project.category) categories.add(project.category);
+  });
   return Array.from(categories).sort();
 });
 
@@ -347,7 +332,11 @@ const allProjectsCount = computed(() => allPortfolioProjects.value.length);
 const uniqueTags = computed(() => {
   const tags = new Set();
   allPortfolioProjects.value.forEach((project) =>
-      project.tags.forEach((tag) => tags.add(tag)),
+      {
+        if (project.tags && Array.isArray(project.tags)) {
+          project.tags.forEach((tag) => tags.add(tag));
+        }
+      }
   );
   return Array.from(tags).sort();
 });
@@ -380,6 +369,7 @@ const changePage = (page) => {
 
 // Função para formatar a data
 const formatDate = (dateString) => {
+  if (!dateString) return "";
   const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date(dateString).toLocaleDateString("pt-PT", options);
 };
@@ -393,30 +383,10 @@ watch(
     { immediate: true },
 ); // Executar imediatamente para configurar a página inicial
 
-// --- ANIMATIONS ---
-onMounted(() => {
-  const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          } else {
-            entry.target.classList.remove("visible");
-          }
-        });
-      },
-      {
-        threshold: 0.1, // Ativa quando 10% do elemento está visível
-      },
-  );
-
-  // Observa todos os cards de projeto para animação
-  document.querySelectorAll(".project-card.animated").forEach((card) => {
-    observer.observe(card);
-  });
-});
 </script>
 
 <style scoped>
 @import "portfolio.css";
 </style>
+
+
