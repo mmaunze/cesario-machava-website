@@ -8,8 +8,7 @@ const project = ref(null);
 const loading = ref(true);
 const error = ref(null);
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://personal-portfolio-website-api.onrender.com/api";
+  import.meta.env.VITE_API_BASE_URL 
 
 const fetchProjectDetails = async (slug) => {
   loading.value = true;

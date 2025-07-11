@@ -2,8 +2,7 @@ import axios from "axios";
 
 // Acessa a variável de ambiente definida no .env do frontend
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://personal-portfolio-website-api.onrender.com";
+  import.meta.env.VITE_API_BASE_URL
 
 // Cria uma instância do Axios para configurar a URL base e outros padrões
 const apiClient = axios.create({

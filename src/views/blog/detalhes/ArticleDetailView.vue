@@ -26,8 +26,7 @@ const fetchArticleAndRelated = async () => {
     allBlogPosts.value = allPostsResponse.posts;
   } catch (err) {
     console.error(`Erro ao buscar artigo com slug ${slug}:`, err);
-    error.value =
-      "Não foi possível carregar o artigo. Ele pode não existir ou houve um erro de rede.";
+    error.value = "Não foi possível carregar o artigo. Ele pode não existir ou houve um erro de rede.";
   } finally {
     loading.value = false;
     window.scrollTo({ top: 0, behavior: "smooth" });
